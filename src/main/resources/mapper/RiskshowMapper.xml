@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zty.project.dao.RiskDao">
+    <!--分页模糊查询隐患风险记录-->
+    <select id="find_riskshow" parameterType="java.util.Map" resultType="com.zty.project.entity.Riskshow">
+        <bind name="page" value="pageSize*(pageNo-1)"></bind>
+        select r.*,s.name as staff_name,b.risk_category as risk_category,s.station_name as station_name,p.project_name
+        as project_name from riskshow r
+        inner staff a on r.sid=a.id
+        inner risk b on r.risk_id=a.id
+        inner station s on r.station_id=s.id
+        inner project p on r.project_id=p.id
+        <where>
+            <if test="risk_id!=null and risk_id!=''">
+                and risk_id=#{risk_id}
+            </if>
+            <if test="station_id!=null and station_id!=''">
+                and station_id=#{station_id}
+            </if>
+            <if test="project_id!=null and project_id!=''">
+                and project_id=#{project_id}
+            </if>
+        </where>
+        limit #{page},#{pageSize}
+    </select>
+
+</mapper>

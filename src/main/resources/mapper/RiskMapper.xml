@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zty.project.dao.RiskDao">
+    <!--分页模糊查询风险类型信息-->
+    <select id="find_risk" parameterType="java.util.Map" resultType="com.zty.project.entity.Risk">
+        <bind name="page" value="pageSize*(pageNo-1)"></bind>
+        select * from risk
+        <where>
+            <if test="risk_category!=null and risk_category!=''">
+                and risk_category like concat("%",#{risk_category},"%")
+            </if>
+            <if test="risk_grade!=null and risk_grade!=''">
+                and risk_grade like concat("%",#{risk_grade},"%")
+            </if>
+        </where>
+        limit #{page},#{pageSize}
+    </select>
+
+    <!--统计总数-->
+    <select id="total" parameterType="java.util.Map" resultType="long">
+        select count(*) from risk
+        <where>
+            <if test="risk_category!=null and risk_category!=''">
+                and risk_category like concat("%",#{risk_category},"%")
+            </if>
+            <if test="risk_grade!=null and risk_grade!=''">
+                and risk_grade like concat("%",#{risk_grade},"%")
+            </if>
+        </where>
+    </select>
+
+    <!--增加风险类型信息-->
+    <select id="add_risk" parameterType="java.util.Map">
+        INSERT INTO `wisdom_site`.`risk` (`risk_category`, `risk_description`, `risk_grade`, `risk_duration`,
+        `construction`, `construction_person`, `construction_phone`, `supervisor`, `supervisor_person`,
+        `supervisor_phone`)
+        VALUES (#{risk_category}, #{risk_description}, #{risk_grade}, #{risk_duration}, #{construction},
+        #{construction_person}, #{construction_phone}, #{supervisor}, #{supervisor_person}, #{supervisor_phone});
+    </select>
+
+    <!--修改风险类型信息-->
+    <update id="upd_risk" parameterType="java.util.Map">
+        UPDATE `wisdom_site`.`risk` SET `risk_category`=#{risk_category},
+        `risk_description`=#{risk_description}, `risk_grade`=#{risk_grade}, `risk_duration`=#{risk_duration},
+        `construction`=#{construction}, `construction_person`=#{construction_person},
+        `construction_phone`=#{construction_phone},
+        `supervisor`=#{supervisor}, `supervisor_person`=#{supervisor_person}, `supervisor_phone`=#{supervisor_phone}
+        WHERE (`id`=#{id});
+    </update>
+
+    <!--删除风险类型信息-->
+    <delete id="del_risk" parameterType="java.util.Map">
+        delete from risk where id=#{id}
+    </delete>
+
+    <!--下拉框查询风险类型信息-->
+    <select id="select_risk" resultType="com.zty.project.entity.Risk">
+        select * from risk
+    </select>
+</mapper>

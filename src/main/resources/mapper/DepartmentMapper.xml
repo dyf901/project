@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zty.project.dao.DepartmentDao">
+    <!--分页查询部门-->
+    <select id="find_department" parameterType="java.util.Map" resultType="com.zty.project.entity.Department">
+        <bind name="page" value="pageSize*(pageNo-1)"></bind>
+        select * from department
+        limit #{page},#{pageSize}
+    </select>
+
+    <!--统计部门信息条数-->
+    <select id="total" parameterType="java.util.Map" resultType="long">
+        select count(*) from department
+    </select>
+
+    <!--增加部门种类-->
+    <insert id="add_department" parameterType="java.util.Map">
+        INSERT INTO `wisdom_site`.`department` (`name`,`deptnum`,`depthead`, `headphone`, `remark`)
+        VALUES (#{name},#{deptnum}, #{depthead}, #{headphone}, #{remark});
+    </insert>
+
+    <!--删除部门-->
+    <delete id="del_department" parameterType="java.util.Map">
+        delete from `wisdom_site`.`department` where id=#{id}
+    </delete>
+
+    <!--修改部门信息-->
+    <update id="upd_department" parameterType="java.util.Map">
+        UPDATE `wisdom_site`.`department` SET `name`=#{name}, `deptnum`=#{deptnum},
+        `percount`=#{percount}, `depthead`=#{depthead}, `headphone`=#{headphone},
+        `remark`=#{remark} WHERE (`id`=#{id});
+    </update>
+
+    <!--增加部门人数-->
+    <update id="upd_department_percount" parameterType="java.util.Map">
+        UPDATE `wisdom_site`.`department` SET `percount`=#{percount}+1 where id=#{id}
+    </update>
+
+    <!--根据id查询部门信息-->
+    <select id="find_department_id" parameterType="java.util.Map" resultType="com.zty.project.entity.Department">
+        select * from `wisdom_site`.`department` where id=#{department_id}
+    </select>
+
+    <!--下拉框查询部门信息-->
+    <select id="select_department" resultType="com.zty.project.entity.Department">
+        select * from department
+    </select>
+</mapper>

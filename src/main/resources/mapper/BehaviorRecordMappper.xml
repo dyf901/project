@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zty.project.dao.BehaviorRecordDao">
+    <!--分页查询行为记录-->
+    <select id="find_behaviorrecord" parameterType="java.util.Map" resultType="com.zty.project.entity.BehaviorRecord">
+        <bind name="page" value="pageSize*(pageNo-1)"></bind>
+        select r.*,s.name as staff_name,s.phone as staff_phone,s.card as staff_card,b.name as behavior_name from
+        behavior_record r
+        inner join behavior b on r.behavior_id=b.id
+        inner join staff s on r.staff_id=s.id
+        limit #{page},#{pageSize}
+    </select>
+
+    <!--统计条数-->
+    <select id="total" parameterType="java.util.Map" resultType="long">
+        select count(*) from behavior_record
+    </select>
+
+    <!--增加行为记录-->
+    <insert id="add_behaviorrecord" parameterType="java.util.Map">
+        INSERT INTO `wisdom_site`.`behavior_record` (`staff_id`, `behavior_id`, `uptime`, `remark`,`integral`)
+        VALUES (#{staff_id}, #{behavior_id}, now(), #{remark},#{integral});
+    </insert>
+
+    <!--删除行为记录-->
+    <delete id="del_behaviorrecord" parameterType="java.util.Map">
+        delete from `wisdom_site`.`behavior_record` where id=#{id}
+    </delete>
+
+    <!--修改行为记录-->
+    <update id="upd_behaviorrecord" parameterType="java.util.Map">
+        UPDATE `wisdom_site`.`behavior_record` SET `behavior_id`=#{behavior_id},
+        `integral`=#{integral},`remark`=#{remark} WHERE (`id`=#{id});
+    </update>
+</mapper>

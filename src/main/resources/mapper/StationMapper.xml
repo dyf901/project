@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zty.project.dao.StationDao">
+    <!-- 查询站点信息 -->
+    <select id="find_station" parameterType="java.util.Map" resultType="com.zty.project.entity.Station">
+        <bind name="page" value="pageSize*(pageNo-1)"></bind>
+        select * from station
+        <where>
+            <if test="station_name!=null and station_name!=''">
+                and station_name like concat("%",#{station_name},"%")
+            </if>
+        </where>
+        limit #{page},#{pageSize}
+    </select>
+
+    <!-- 统计总数 -->
+    <select id="total" resultType="long">
+        select count(*) from station
+    </select>
+
+    <!-- 增加站点信息 -->
+    <insert id="add_station" parameterType="java.util.Map">
+        INSERT INTO station (`station_name`,`station_time`,`start_time`, `end_time`, `station_principal`,
+        `station_area`) VALUES (#{station_name},#{station_time},#{start_time},#{end_time},#{station_principal},
+        #{station_area});
+    </insert>
+
+    <!-- 修改站点信息 -->
+    <update id="upd_station" parameterType="java.util.Map">
+        update station set
+        station_name=#{station_name},station_time=#{station_time},start_time=#{start_time},end_time=#{end_time},station_principal=#{station_principal},station_area=#{station_area}
+        where id=#{id}
+    </update>
+
+    <!-- 删除站点信息 -->
+    <delete id="del_station" parameterType="java.util.Map">
+        delete from station where id=#{id}
+    </delete>
+
+    <!-- 下拉框展示 -->
+    <select id="select_station" resultType="com.zty.project.entity.Station">
+        select id,station_name from station
+    </select>
+
+    <!--计算规划天数-->
+    <select id="count" parameterType="java.util.Map" resultType="int">
+        select datediff(#{end_time},#{start_time})
+    </select>
+</mapper>   

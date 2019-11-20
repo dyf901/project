@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zty.project.dao.StaffDao">
+    <!--模糊分页查询-->
+    <select id="find_staff" parameterType="java.util.Map" resultType="com.zty.project.entity.Staff">
+        <bind name="page" value="pageSize*(pageNo-1)"></bind>
+        select s.*,d.name as departmentname,w.name as worktypename from staff s
+        inner join department d on s.department_id=d.id
+        inner join worktype w on s.worktype_id=w.id
+        <where>
+            <if test="name!=null and name!=''">
+                and s.name like concat("%",#{name},"%")
+            </if>
+            <if test="state!=null and state!=''">
+                and s.state like concat("%",#{state},"%")
+            </if>
+            <if test="start_time!=null and end_time !=null">
+                and s.createtime &gt;=#{start} and s.createtime &lt;= #{end}
+            </if>
+        </where>
+        limit #{page},#{pageSize}
+    </select>
+
+    <!--模糊分页查询统计总条数-->
+    <select id="total" parameterType="java.util.Map" resultType="long">
+        select count(*) from staff
+        <where>
+            <if test="name!=null and name!=''">
+                and name like concat("%",#{name},"%")
+            </if>
+            <if test="state!=null and state!=''">
+                and state like concat("%",#{state},"%")
+            </if>
+            <if test="start_time!=null and end_time !=null">
+                and createtime &gt;=#{start} and s.createtime &lt;= #{end}
+            </if>
+        </where>
+    </select>
+
+    <!--增加员工信息-->
+    <insert id="add_staff" parameterType="java.util.Map">
+        INSERT INTO `wisdom_site`.`staff` ( `name`, `sex`, `nation`, `card`, `address`, `phone`, `sos_name`, `sos_ship`,
+        `sos_phone`, `createtime`, `img_url`, `department_id`, `worktype_id`) VALUES
+        (#{name}, #{sex}, #{nation}, #{card}, #{address}, #{phone}, #{sos_name}, #{sos_ship}, #{sos_phone}, now(),
+        #{img_url}, #{department_id}, #{worktype_id});
+    </insert>
+
+    <!--删除员工信息-->
+    <delete id="del_staff" parameterType="java.util.Map">
+        delete from `wisdom_site`.`staff` where id=#{id}
+    </delete>
+
+    <!--修改员工信息-->
+    <update id="upd_staff" parameterType="java.util.Map">
+        UPDATE `wisdom_site`.`staff` SET `name`=#{name},
+        `sex`=#{sex}, `nation`=#{nation}, `card`=#{card}, `address`=#{address},
+        `phone`=#{phone}, `sos_name`=#{sos_name}, `sos_ship`=#{sos_ship}, `sos_phone`=#{sos_phone},`img_url`=#{img_url},
+        `department_id`=#{department_id}, `worktype_id`=#{worktype_id}
+        WHERE (`id`=#{id});
+    </update>
+
+    <!--修改员工在职状态-->
+    <update id="upd_staff_state" parameterType="java.util.Map">
+        update `wisdom_site`.`staff` set state="离职" where id=#{id}
+    </update>
+
+    <!--根据身份证号card查询人员信息-->
+    <select id="find_staff_card" parameterType="java.util.Map" resultType="com.zty.project.entity.Staff">
+        select * from staff where card=#{card}
+    </select>
+
+    <!--根据身份证号card查询是否有这个员工-->
+    <select id="find_staff_cardcount" parameterType="java.util.Map" resultType="int">
+        select count(*) from staff where card=#{card}
+    </select>
+</mapper>

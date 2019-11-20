@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zty.project.dao.WorkTypeDao">
+    <!--分页查询工种信息-->
+    <select id="find_worktype" parameterType="java.util.Map" resultType="com.zty.project.entity.WorkType">
+        <bind name="page" value="pageSize*(pageNo-1)"></bind>
+        select w.*,d.name as department_name from worktype w
+        inner join department d on w.department_id=d.id
+        limit #{page},#{pageSize}
+    </select>
+
+    <!--统计条数-->
+    <select id="total" resultType="long">
+        select count(*) from worktype
+    </select>
+
+    <!--增加工种-->
+    <insert id="add_worktype" parameterType="java.util.Map">
+        INSERT INTO `wisdom_site`.`worktype` (`name`, `content`, `department_id`, `remark`)
+        VALUES (#{name}, #{content}, #{department_id}, #{remark});
+    </insert>
+
+    <!--删除工种-->
+    <delete id="del_worktype" parameterType="java.util.Map">
+        delete from worktype where id=#{id}
+    </delete>
+
+    <!--修改工种-->
+    <update id="upd_worktype">
+        UPDATE `wisdom_site`.`worktype` SET `name`=#{name}, `content`=#{content}, `department_id`=#{department_id},
+        `remark`=#{remark} WHERE (`id`=#{id})
+    </update>
+
+    <!--下拉框查找工种信息-->
+    <select id="select_worktype" resultType="com.zty.project.entity.WorkType">
+        select * from worktype
+    </select>
+</mapper>

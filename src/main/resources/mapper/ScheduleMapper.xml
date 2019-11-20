@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zty.project.dao.ScheduleDao">
+    <!--增加进度上传记录-->
+    <insert id="add_schedule" parameterType="java.util.Map">
+        INSERT INTO `wisdom_site`.`schedule` (`station_id`, `project_id`, `accomplish_day`, `uptime`)
+        VALUES (#{station_id}, #{id}, #{accomplish_day}, now());
+    </insert>
+
+    <!--根据上传进度记录查询当月完成量-->
+    <select id="find_accomplish_sum" parameterType="java.util.Map" resultType="int">
+        select SUM(accomplish_day) from schedule where date_format(uptime,'%Y-%m')=date_format(now(),'%Y-%m') and
+        station_id=#{station_id} and project_id=#{id}
+    </select>
+</mapper>

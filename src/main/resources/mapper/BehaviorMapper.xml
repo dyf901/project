@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zty.project.dao.BehaviorDao">
+    <!--分页查询行为类型信息-->
+    <select id="find_behavior" parameterType="java.util.Map" resultType="com.zty.project.entity.Behavior">
+        <bind name="page" value="pageSize*(pageNo-1)"></bind>
+        select * from behavior
+        limit #{page},#{pageSize}
+    </select>
+
+    <!--统计条数-->
+    <select id="total" resultType="long">
+        select count(*) from behavior
+    </select>
+
+    <!--增加行为类型信息-->
+    <insert id="add_behavior" parameterType="java.util.Map">
+        INSERT INTO `wisdom_site`.`behavior` (`name`, `detail`, `remark`) VALUES (#{name},#{detail},#{remark});
+    </insert>
+
+    <!--修改行为类型信息-->
+    <update id="upd_behavior" parameterType="java.util.Map">
+        UPDATE `wisdom_site`.`behavior` SET `name`=#{name}, `detail`=#{detail}, `remark`=#{remark} WHERE (`id`=#{id});
+    </update>
+
+    <!--删除行为类型信息-->
+    <delete id="del_behavior" parameterType="java.util.Map">
+        delete from behavior where id=#{id}
+    </delete>
+
+    <!--下拉框查询行为类型信息-->
+    <select id="select_behavior" resultType="com.zty.project.entity.Behavior">
+        select * from behavior
+    </select>
+</mapper>
