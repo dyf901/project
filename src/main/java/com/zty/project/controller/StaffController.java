@@ -41,7 +41,7 @@ public class StaffController {
         return page;
     }
 
-    @ApiOperation(value = "增加员工信息", notes = "测试数据:{\"name\":\"晋铁\",\n" +
+    @ApiOperation(value = "增加员工信", notes = "测试数据:{\"name\":\"晋铁\",\n" +
             "\"sex\":\"男\",\n" +
             "\"nation\":\"汉\",\n" +
             "\"address\":\"上海市静安区\",\n" +
