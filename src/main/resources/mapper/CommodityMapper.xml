@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zty.project.dao.CommodityDao">
+    <!-- 分页查找所有商品信息 -->
+    <select id="find_commodity" parameterType="java.util.Map" resultType="com.zty.project.entity.Commodity">
+        <bind name="page" value="pageSize*(pageNo)"></bind>
+  		select * from commodity
+        limit #{page},#{pageSize}
+  	</select>
+
+    <!-- 统计总数 -->
+    <select id="total" resultType="long">
+  		select count(*) from commodity
+  	</select>
+
+    <!-- 增加商品 -->
+    <insert id="add_commodity" parameterType="java.util.Map">
+  		insert into commodity (commodity_name,up_time,price,url) values(#{commodity_name},now(),#{price},#{url})
+  	</insert>
+
+    <!-- 修改商品信息 状态改为0 -->
+    <update id="update_commodity_active0" parameterType="java.util.Map">
+  		update commodity set active=0,up_time=null,dn_time=now() where id=#{id}
+  	</update>
+
+    <!-- 修改商品信息 状态改为1 -->
+    <update id="update_commodity_active1" parameterType="java.util.Map">
+  		update commodity set active=1,up_time=now(),dn_time=null where id=#{id}
+  	</update>
+
+    <!-- 下拉框查询数据 -->
+    <select id="select_commodity" resultType="com.zty.project.entity.Commodity">
+		select * from commodity where active=1
+	</select>
+
+    <!-- 根据id查询物品信息 -->
+    <select id="select_commodity_id" parameterType="java.util.Map" resultType="com.zty.project.entity.Commodity">
+		select * from commodity where id=#{id}
+	</select>
+</mapper>
