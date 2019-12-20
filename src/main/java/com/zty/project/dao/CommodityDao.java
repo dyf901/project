@@ -21,5 +21,9 @@ public interface CommodityDao {
     //修改商品信息 状态改为1
     int update_commodity_active1(Map map);
 
-    //
+    //下拉框查询数据
+    List<Commodity> select_commodity();
+
+    //根据id查询物品信息
+    Commodity select_commodity_id(Map map);
 }
