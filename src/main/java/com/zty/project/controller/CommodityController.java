@@ -58,7 +58,7 @@ public class CommodityController {
         return false;
     }
 
-    @ApiOperation(value = "修改商品状态  上架",notes = "")
+    @ApiOperation(value = "修改商品状态  上架",notes = " ")
     @PostMapping("update_commodity_active0")
     public boolean update_commodity_active0(@RequestBody Map map){
         return commodityService.update_commodity_active0(map)==1;
