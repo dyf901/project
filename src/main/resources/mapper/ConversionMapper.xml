@@ -2,5 +2,31 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="***.dao.******Dao">
+<mapper namespace="com.zty.project.dao.ConversionDao">
+    <!-- 查看兑换信息 -->
+    <select id="find_conversion" resultType="com.zty.project.entity.Conversion">
+		select *,s.st_name as st_name from conversion c
+		inner join staff s on c.sid=s.sid
+	</select>
+
+    <!-- 增加兑换信息 -->
+    <insert id="add_conversion" parameterType="java.util.Map">
+		insert into conversion (st_project,sid,conversion_time,commodity_name) values (#{st_project},#{sid},now(),#{commodity_name})
+	</insert>
+
+    <!-- 查找个人的兑换信息 -->
+    <select id="find_conversion_sid" parameterType="java.util.Map" resultType="com.zty.project.entity.Conversion">
+  		select c.*,s.st_name as st_name from conversion c inner join staff s on c.sid=s.sid where c.sid=#{sid}
+  	</select>
+
+    <!--根据部门查找顿换信息-->
+    <select id="find_conversion_project" parameterType="java.util.Map" resultType="com.zty.project.entity.Conversion">
+  		select * from conversion c inner join staff s on c.sid=s.sid where c.st_project=#{st_project}
+  	</select>
+
+    <!--  -->
+    <select id="select_conversion" resultType="java.util.Map">
+		select *,s.st_name as st_name from conversion c
+		inner join staff s on c.sid=s.sid
+	</select>
 </mapper>

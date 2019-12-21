@@ -60,4 +60,5 @@ public class BehaviorController {
     public List<Behavior> select_behavior() {
         return behaviorDao.select_behavior();
     }
+
 }
