@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service("StaffService")
-public class StaffService {
+public class StaffService implements StaffDao{
     @Autowired
     private StaffDao staffDao;
 
@@ -52,5 +52,17 @@ public class StaffService {
     //根据身份证号card查询是否有这个员工
     public int find_staff_cardcount(Map map) {
         return staffDao.find_staff_cardcount(map);
+    }
+
+    //根据id查询员工信息
+    @Override
+    public Staff find_id(Map map) {
+        return staffDao.find_id(map);
+    }
+
+    //根据id修改员工剩余积分
+    @Override
+    public int upd_end(Map map) {
+        return staffDao.upd_end(map);
     }
 }

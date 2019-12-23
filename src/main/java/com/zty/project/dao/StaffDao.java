@@ -32,4 +32,10 @@ public interface StaffDao {
 
     //根据身份证号card查询是否有这个员工
     int find_staff_cardcount(Map map);
+
+    //根据id查询员工信息
+    Staff find_id(Map map);
+
+    //根据id修改剩余积分
+    int upd_end(Map map);
 }

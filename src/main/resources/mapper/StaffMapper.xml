@@ -75,4 +75,14 @@
     <select id="find_staff_cardcount" parameterType="java.util.Map" resultType="int">
         select count(*) from staff where card=#{card}
     </select>
+
+    <!--根据id查询员工信息-->
+    <select id="find_id" parameterType="java.util.Map" resultType="com.zty.project.entity.Staff">
+        select * from staff where id=#{id}
+    </select>
+
+    <!--根据id修改剩余积分-->
+    <update id="upd_end" parameterType="java.util.Map">
+        update staff set `end`=`end`-#{price} where id=#{id}
+    </update>
 </mapper>
