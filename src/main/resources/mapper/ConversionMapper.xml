@@ -4,20 +4,32 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zty.project.dao.ConversionDao">
     <!-- 查看兑换信息 -->
-    <select id="find_conversion" resultType="com.zty.project.entity.Conversion">
-		select *,s.name as sname from conversion c
+    <select id="find_conversion" parameterType="java.util.Map" resultType="com.zty.project.entity.Conversion">
+		<bind name="page" value="pageSize*(pageNo-1)"></bind>
+		select c.*,s.name as sname,d.name as dname,l.name as cname from conversion c
 		inner join staff s on c.sid=s.id
+		inner join department d on c.did=d.id
+		inner join commodity l on c.cid=l.id
+		limit #{page},#{pigeSzie}
+	</select>
+
+	<!--统计总数-->
+	<select id="total" resultType="long">
+		select count (*) conversion
 	</select>
 
     <!-- 增加兑换信息 -->
     <insert id="add_conversion" parameterType="java.util.Map">
-		insert into conversion (did,sid,conversion_time,commodity_name) values (#{did},#{sid},now(),#{commodity_name})
+		insert into conversion (did,sid,conversion_time,cid) values (#{did},#{sid},now(),#{cid})
 	</insert>
 
     <!-- 查找个人的兑换信息 -->
     <select id="find_conversion_sid" parameterType="java.util.Map" resultType="com.zty.project.entity.Conversion">
-  		select c.*,s.name as sname from conversion c
-  		inner join staff s on c.sid=s.id
-  		where c.sid=#{sid}
+		<bind name="page" value="pageSize*(pageNo-1)"></bind>
+		select c.*,s.name as sname,d.name as dname,l.name as cname from conversion c
+		inner join staff s on c.sid=s.id
+		inner join department d on c.did=d.id
+		inner join commodity l on c.cid=l.id
+		limit #{page},#{pigeSzie}
   	</select>
 </mapper>

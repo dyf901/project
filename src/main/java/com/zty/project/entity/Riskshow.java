@@ -19,6 +19,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
  * price   分配的积分
  * url,url1,url2,url3,url4,url5,url6,url7,url8   风险图片(地址)
  * url_rectify,url_rectify1,url_rectify2,url_rectify3,url_rectify4,url_rectify5,url_rectify6,url_rectify7,url_rectify8   整改后的图片（地址）
+ *
+ * staff_name   员工姓名
+ * risk_category    风险源名称
+ * station_name     站点名称
+ * project_name     项目名称
  * */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Riskshow {
@@ -26,12 +31,13 @@ public class Riskshow {
     private String description, uptime, active, state, remark;
     private String url, url1, url2, url3, url4, url5, url6, url7, url8;
     private String url_rectify, url_rectify1, url_rectify2, url_rectify3, url_rectify4, url_rectify5, url_rectify6, url_rectify7, url_rectify8;
+    private String staff_name,risk_category,station_name,project_name;
 
     public Riskshow() {
         super();
     }
 
-    public Riskshow(int id, int sid, int risk_id, int station_id, int project_id, int price, String description, String uptime, String active, String state, String remark, String url, String url1, String url2, String url3, String url4, String url5, String url6, String url7, String url8, String url_rectify, String url_rectify1, String url_rectify2, String url_rectify3, String url_rectify4, String url_rectify5, String url_rectify6, String url_rectify7, String url_rectify8) {
+    public Riskshow(int id, int sid, int risk_id, int station_id, int project_id, int price, String description, String uptime, String active, String state, String remark, String url, String url1, String url2, String url3, String url4, String url5, String url6, String url7, String url8, String url_rectify, String url_rectify1, String url_rectify2, String url_rectify3, String url_rectify4, String url_rectify5, String url_rectify6, String url_rectify7, String url_rectify8, String staff_name, String risk_category, String station_name, String project_name) {
         this.id = id;
         this.sid = sid;
         this.risk_id = risk_id;
@@ -61,6 +67,10 @@ public class Riskshow {
         this.url_rectify6 = url_rectify6;
         this.url_rectify7 = url_rectify7;
         this.url_rectify8 = url_rectify8;
+        this.staff_name = staff_name;
+        this.risk_category = risk_category;
+        this.station_name = station_name;
+        this.project_name = project_name;
     }
 
     public int getId() {
@@ -295,6 +305,38 @@ public class Riskshow {
         this.url_rectify8 = url_rectify8;
     }
 
+    public String getStaff_name() {
+        return staff_name;
+    }
+
+    public void setStaff_name(String staff_name) {
+        this.staff_name = staff_name;
+    }
+
+    public String getRisk_category() {
+        return risk_category;
+    }
+
+    public void setRisk_category(String risk_category) {
+        this.risk_category = risk_category;
+    }
+
+    public String getStation_name() {
+        return station_name;
+    }
+
+    public void setStation_name(String station_name) {
+        this.station_name = station_name;
+    }
+
+    public String getProject_name() {
+        return project_name;
+    }
+
+    public void setProject_name(String project_name) {
+        this.project_name = project_name;
+    }
+
     @Override
     public String toString() {
         return "Riskshow{" +
@@ -327,6 +369,10 @@ public class Riskshow {
                 ", url_rectify6='" + url_rectify6 + '\'' +
                 ", url_rectify7='" + url_rectify7 + '\'' +
                 ", url_rectify8='" + url_rectify8 + '\'' +
+                ", staff_name='" + staff_name + '\'' +
+                ", risk_category='" + risk_category + '\'' +
+                ", station_name='" + station_name + '\'' +
+                ", project_name='" + project_name + '\'' +
                 '}';
     }
 }

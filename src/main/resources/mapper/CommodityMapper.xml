@@ -5,7 +5,7 @@
 <mapper namespace="com.zty.project.dao.CommodityDao">
     <!-- 分页查找所有商品信息 -->
     <select id="find_commodity" parameterType="java.util.Map" resultType="com.zty.project.entity.Commodity">
-        <bind name="page" value="pageSize*(pageNo)"></bind>
+        <bind name="page" value="pageSize*(pageNo-1)"></bind>
   		select * from commodity
         limit #{page},#{pageSize}
   	</select>

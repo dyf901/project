@@ -9,6 +9,9 @@ public interface ConversionDao {
     //查看兑换信息
     List<Conversion> find_conversion();
 
+    //统计总数
+    long total();
+
     //增加兑换信息
     int add_conversion(Map map);
 

@@ -59,12 +59,12 @@ public class WorkType {
         this.content = content;
     }
 
-    public String getRemake() {
+    public String getRemark() {
         return remark;
     }
 
-    public void setRemake(String remake) {
-        this.remark = remake;
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public String getDepartment_name() {

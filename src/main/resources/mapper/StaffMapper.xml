@@ -73,16 +73,21 @@
 
     <!--根据身份证号card查询是否有这个员工-->
     <select id="find_staff_cardcount" parameterType="java.util.Map" resultType="int">
-        select count(*) from staff where card=#{card}
+        select count(*) from staff where card=#{card} and phone=#{phone}
     </select>
 
     <!--根据id查询员工信息-->
     <select id="find_id" parameterType="java.util.Map" resultType="com.zty.project.entity.Staff">
-        select * from staff where id=#{id}
+        select * from staff where id=#{sid}
     </select>
 
     <!--根据id修改剩余积分-->
     <update id="upd_end" parameterType="java.util.Map">
-        update staff set `end`=`end`-#{price} where id=#{id}
+        update staff set `end`=`end`-#{price} where id=#{sid}
     </update>
+
+    <!--根据电话号码查询员工信息-->
+    <select id="find_staff_phone" parameterType="java.util.Map" resultType="com.zty.project.entity.Staff">
+        select * from staff where phone=#{phone}
+    </select>
 </mapper>

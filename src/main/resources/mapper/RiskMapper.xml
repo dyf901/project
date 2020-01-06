@@ -32,13 +32,13 @@
     </select>
 
     <!--增加风险类型信息-->
-    <select id="add_risk" parameterType="java.util.Map">
+    <insert id="add_risk" parameterType="java.util.Map">
         INSERT INTO `wisdom_site`.`risk` (`risk_category`, `risk_description`, `risk_grade`, `risk_duration`,
         `construction`, `construction_person`, `construction_phone`, `supervisor`, `supervisor_person`,
         `supervisor_phone`)
         VALUES (#{risk_category}, #{risk_description}, #{risk_grade}, #{risk_duration}, #{construction},
         #{construction_person}, #{construction_phone}, #{supervisor}, #{supervisor_person}, #{supervisor_phone});
-    </select>
+    </insert>
 
     <!--修改风险类型信息-->
     <update id="upd_risk" parameterType="java.util.Map">

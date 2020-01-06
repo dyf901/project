@@ -13,7 +13,7 @@ import java.util.Map;
 
 @Api(description = "隐患风险类型信息")
 @RestController
-@RequestMapping("staff")
+@RequestMapping("risk")
 @CrossOrigin
 public class RiskController {
     @Autowired

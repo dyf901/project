@@ -10,6 +10,14 @@
         behavior_record r
         inner join behavior b on r.behavior_id=b.id
         inner join staff s on r.staff_id=s.id
+        <where>
+            <if test="behavior_id!=null and behavior_id!=''">
+                and r.behavior_id=#{behavior_id}
+            </if>
+            <if test="name!=null and name!=''">
+                and s.name like concat("%",#{name},"%")
+            </if>
+        </where>
         limit #{page},#{pageSize}
     </select>
 

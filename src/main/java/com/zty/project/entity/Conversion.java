@@ -8,28 +8,31 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 * did     部门id
 * sid       员工id
 * conversion_time   兑换时间
-* commodity_name    兑换的商品
+* cid    商品id
 * send_active       派送状态
 *
 * dname      部门名称
 * sname      员工姓名
+* cname      商品名称
 * */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Conversion {
-    private int id,sid,did;
-    private String conversion_time,commodity_name,send_active;
+    private int id,sid,did,cid;
+    private String conversion_time,send_active,dname,sname;
 
     public Conversion(){
         super();
     }
 
-    public Conversion(int id, int sid, int did, String conversion_time, String commodity_name, String send_active) {
+    public Conversion(int id, int sid, int did, int cid, String conversion_time, String send_active, String dname, String sname) {
         this.id = id;
         this.sid = sid;
         this.did = did;
+        this.cid = cid;
         this.conversion_time = conversion_time;
-        this.commodity_name = commodity_name;
         this.send_active = send_active;
+        this.dname = dname;
+        this.sname = sname;
     }
 
     public int getId() {
@@ -56,12 +59,12 @@ public class Conversion {
         this.conversion_time = conversion_time;
     }
 
-    public String getCommodity_name() {
-        return commodity_name;
+    public int getCid() {
+        return cid;
     }
 
-    public void setCommodity_name(String commodity_name) {
-        this.commodity_name = commodity_name;
+    public void setCid(int cid) {
+        this.cid = cid;
     }
 
     public String getSend_active() {
@@ -80,15 +83,33 @@ public class Conversion {
         this.did = did;
     }
 
+    public String getDname() {
+        return dname;
+    }
+
+    public void setDname(String dname) {
+        this.dname = dname;
+    }
+
+    public String getSname() {
+        return sname;
+    }
+
+    public void setSname(String sname) {
+        this.sname = sname;
+    }
+
     @Override
     public String toString() {
         return "Conversion{" +
                 "id=" + id +
                 ", sid=" + sid +
                 ", did=" + did +
+                ", cid=" + cid +
                 ", conversion_time='" + conversion_time + '\'' +
-                ", commodity_name='" + commodity_name + '\'' +
                 ", send_active='" + send_active + '\'' +
+                ", dname='" + dname + '\'' +
+                ", sname='" + sname + '\'' +
                 '}';
     }
 }

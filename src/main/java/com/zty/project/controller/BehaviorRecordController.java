@@ -44,9 +44,9 @@ public class BehaviorRecordController {
         if (staff.getName().equals(map.get("name"))) {
             map.put("staff_id", staffDao.find_staff_card(map).getId());
             behaviorRecordDao.add_behaviorrecord(map);
-            return "true";
+            return "增加成功!";
         }
-        return "false";
+        return "增加失败,身份证号与名字不对应!";
     }
 
     @ApiOperation(value = "删除行为记录", notes = "")
@@ -60,4 +60,6 @@ public class BehaviorRecordController {
     public boolean upd_behaviorrecord(@RequestBody Map map) {
         return behaviorRecordDao.upd_behaviorrecord(map) == 1;
     }
+
+
 }

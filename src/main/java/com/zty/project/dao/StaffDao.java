@@ -38,4 +38,7 @@ public interface StaffDao {
 
     //根据id修改剩余积分
     int upd_end(Map map);
+
+    //根据phone来查询员工信息
+    Staff find_staff_phone(Map map);
 }

@@ -5,6 +5,7 @@ import com.zty.project.dao.DepartmentDao;
 import com.zty.project.dao.StaffDao;
 import com.zty.project.entity.Staff;
 import com.zty.project.page.Page;
+import com.zty.project.util.Msg;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -53,43 +54,17 @@ public class StaffController {
             "\"department_id\":3,\n" +
             "\"worktype_id\":1}")
     @PostMapping("/add_staff")
-    public boolean add_staff(@RequestParam("file") MultipartFile file, Staff staff) {
-        System.out.println(file.getSize());
-        System.out.println("staff:" + staff);
-        Map map = new HashMap();
-        map.put("name", staff.getName());
-        map.put("sex", staff.getSex());
-        map.put("nation", staff.getNation());
-        map.put("address", staff.getAddress());
-        map.put("card", staff.getCard());
-        map.put("phone", staff.getPhone());
-        map.put("sos_name", staff.getSos_name());
-        map.put("sos_ship", staff.getSos_ship());
-        map.put("sos_phone", staff.getSos_phone());
-        map.put("department_id", staff.getDepartment_id());
-        map.put("worktype_id", staff.getWorktype_id());
-        if (staffDao.find_staff_cardcount(map) != 1) {
-            String oldFileName = file.getOriginalFilename();
-            int lastDotIndex = oldFileName.lastIndexOf(".");
-            String extName = oldFileName.substring(lastDotIndex);
-            String newName = UUID.randomUUID() + extName;
-            map.put("img_url", newName);
-            File excelFile =
-                    new File("E:\\Test\\"//   /root/img/
-                            + newName);
-            try {
-                file.transferTo(excelFile);
-                staffDao.add_staff(map);
-                departmentDao.find_department_id(map);
-                map.put("id", departmentDao.find_department_id(map).getId());
-                map.put("percount", departmentDao.find_department_id(map).getPercount());
-                departmentDao.upd_department_percount(map);
-                return true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public Msg add_staff(@RequestBody Map map) {
+        Msg msg =new Msg();
+        if(staffDao.find_staff_cardcount(map)==1){
+            msg.setMessage("增加失败,员工已存在!");
+            return msg;
+        }else {
+            staffDao.add_staff(map);
+            msg.setMessage("增加成功!");
+            return msg;
         }
-        return false;
+
     }
 
     @ApiOperation(value = "查找员工照片", notes = "测试数据:{\"name\":\"安全行为之星系统.pdf\"}")
@@ -151,30 +126,8 @@ public class StaffController {
 
     @ApiOperation(value = "修改员工信息", notes = "测试数据:{\"name\":\"质量制度\"}")
     @PostMapping("/upd_staff")
-    public boolean upd_staff(@RequestBody Staff staff) {
-        System.out.println("staff:" + staff);
-        Map map = new HashMap();
-        map.put("id", staff.getId());
-        map.put("name", staff.getName());
-        map.put("sex", staff.getSex());
-        map.put("nation", staff.getNation());
-        map.put("address", staff.getAddress());
-        map.put("card", staff.getCard());
-        map.put("phone", staff.getPhone());
-        map.put("sos_name", staff.getSos_name());
-        map.put("sos_ship", staff.getSos_ship());
-        map.put("sos_phone", staff.getSos_phone());
-        map.put("department_id", staff.getDepartment_id());
-        map.put("worktype_id", staff.getWorktype_id());
-        if (staff.getNew_url() != null || staff.getNew_url() != "") {
-            System.out.println(staff.getNew_url());
-            map.put("img_url", staff.getNew_url());
-            return staffDao.upd_staff(map) == 1;
-        } else {
-            System.out.println(staff.getImg_url());
-            map.put("img_url", staff.getImg_url());
-            return staffDao.upd_staff(map) == 1;
-        }
+    public boolean upd_staff(@RequestBody Map map) {
+        return staffDao.upd_staff(map)==1;
     }
 
     @ApiOperation(value = "base64", notes = "测试数据:")
@@ -238,6 +191,25 @@ public class StaffController {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    @ApiOperation(value = "app登录接口",notes = "")
+    @PostMapping("app_login")
+    public Msg app_login(@RequestBody Map map){
+        Msg msg = new Msg();
+        Staff staff = staffDao.find_staff_phone(map);
+        if(staff==null){
+            msg.setMessage("账号不存在!");
+            return msg;
+        }else {
+            if(staff.getPassword().equals(map.get("password"))){
+                msg.setMessage("登录成功!");
+                return msg;
+            }else {
+                msg.setMessage("密码错误,登录失败!");
+                return msg;
+            }
         }
     }
 }
