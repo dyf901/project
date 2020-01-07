@@ -3,6 +3,7 @@ package com.zty.project.controller;
 
 import com.zty.project.dao.DepartmentDao;
 import com.zty.project.dao.StaffDao;
+import com.zty.project.entity.Department;
 import com.zty.project.entity.Staff;
 import com.zty.project.page.Page;
 import com.zty.project.util.Msg;
@@ -61,6 +62,10 @@ public class StaffController {
             return msg;
         }else {
             staffDao.add_staff(map);
+            Department department = departmentDao.find_department_id(map);
+            map.put("percount",department.getPercount());
+            map.put("id",department.getId());
+            departmentDao.upd_department_percount(map);
             msg.setMessage("增加成功!");
             return msg;
         }

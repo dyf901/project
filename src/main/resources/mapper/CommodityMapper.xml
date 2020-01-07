@@ -7,6 +7,11 @@
     <select id="find_commodity" parameterType="java.util.Map" resultType="com.zty.project.entity.Commodity">
         <bind name="page" value="pageSize*(pageNo-1)"></bind>
   		select * from commodity
+		<where>
+			<if test="commodity_name!=null and commodity_name!=''">
+				commodity_name like concat("%",#{commodity_name},"%")
+			</if>
+		</where>
         limit #{page},#{pageSize}
   	</select>
 

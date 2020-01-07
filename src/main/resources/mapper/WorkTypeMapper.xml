@@ -8,6 +8,11 @@
         <bind name="page" value="pageSize*(pageNo-1)"></bind>
         select w.*,d.name as department_name from worktype w
         inner join department d on w.department_id=d.id
+        <where>
+            <if test="department_id!=null and department_id!=''">
+                department_id=#{department_id}
+            </if>
+        </where>
         limit #{page},#{pageSize}
     </select>
 

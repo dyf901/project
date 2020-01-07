@@ -10,6 +10,11 @@
 		inner join staff s on c.sid=s.id
 		inner join department d on c.did=d.id
 		inner join commodity l on c.cid=l.id
+		<where>
+			<if test="name!=null and name!=''">
+				s.name like concat("%",#{name},"%")
+			</if>
+		</where>
 		limit #{page},#{pigeSzie}
 	</select>
 
