@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 * id    商品id
 * commodity_name    商品名称
 * up_time   上架时间
-* dn_time   下架时间
 * price     价格
 * url       商品图片
 * active    状态
@@ -15,19 +14,18 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Commodity {
     private int id,price,active;
-    private String commodity_name,up_time,dn_time,url;
+    private String commodity_name,up_time,url;
 
     public Commodity(){
         super();
     }
 
-    public Commodity(int id, int price, int active, String commodity_name, String up_time, String dn_time, String url) {
+    public Commodity(int id, int price, int active, String commodity_name, String up_time, String url) {
         this.id = id;
         this.price = price;
         this.active = active;
         this.commodity_name = commodity_name;
         this.up_time = up_time;
-        this.dn_time = dn_time;
         this.url = url;
     }
 
@@ -71,14 +69,6 @@ public class Commodity {
         this.up_time = up_time;
     }
 
-    public String getDn_time() {
-        return dn_time;
-    }
-
-    public void setDn_time(String dn_time) {
-        this.dn_time = dn_time;
-    }
-
     public String getUrl() {
         return url;
     }
@@ -95,7 +85,6 @@ public class Commodity {
                 ", active=" + active +
                 ", commodity_name='" + commodity_name + '\'' +
                 ", up_time='" + up_time + '\'' +
-                ", dn_time='" + dn_time + '\'' +
                 ", url='" + url + '\'' +
                 '}';
     }

@@ -12,8 +12,8 @@ public class ConversionService {
     private ConversionDao conversionDao;
 
     //查看兑换信息
-    public List<Conversion> find_conversion(){
-        return conversionDao.find_conversion();
+    public List<Conversion> find_conversion(Map map){
+        return conversionDao.find_conversion(map);
     }
 
     //统计总数

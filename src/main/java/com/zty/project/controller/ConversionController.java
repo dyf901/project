@@ -36,7 +36,7 @@ public class ConversionController {
         Page<Conversion> page = new Page<Conversion>();
         page.setPageNo((Integer) map.get("pageNo"));
         page.setPageSize((Integer) map.get("pageSize"));
-        page.setItems(conversionDao.find_conversion());
+        page.setItems(conversionDao.find_conversion(map));
         page.setTotal(conversionDao.total());
         return page;
     }
@@ -69,6 +69,6 @@ public class ConversionController {
     @ApiOperation(value = "查找个人兑换记录",notes = "")
     @PostMapping("find_conversion_sid")
     public List<Conversion> find_conversion_sid(@RequestBody Map map){
-        return conversionDao.find_conversion();
+        return conversionDao.find_conversion_sid(map);
     }
 }

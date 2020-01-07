@@ -9,11 +9,9 @@
         select p.*,s.station_name as station_name from project p
         inner join station s on p.station_id=s.id
         <where>
+            p.station_id=#{id}
             <if test="project_name!=null and project_name!=''">
                 and p.project_name like concat("%",#{project_name},"%")
-            </if>
-            <if test="id!=null and id!=''">
-                and p.station_id=#{id}
             </if>
         </where>
         limit #{page},#{pageSize}

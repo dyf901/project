@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface ConversionDao {
     //查看兑换信息
-    List<Conversion> find_conversion();
+    List<Conversion> find_conversion(Map map);
 
     //统计总数
     long total();
