@@ -11,10 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -258,5 +256,27 @@ public class RiskshowController {
         page.setItems(riskshowService.find_riskshow(map));
         page.setTotal(riskshowService.total(map));
         return page;
+    }
+
+    @ApiOperation(value = "查找员工照片", notes = "测试数据:{\"name\":\"安全行为之星系统.pdf\"}")
+    @GetMapping("/find_img")
+    public void find_img(@RequestParam String img_url, HttpServletResponse response) {
+        try {
+            BufferedInputStream bis =
+                    new BufferedInputStream(
+                            new FileInputStream(
+                                    new File("E:\\Test\\" + img_url)));///root/img/
+            int num;
+            byte[] b = new byte[1024];
+
+            while ((num = bis.read(b)) != -1) {
+                response.getOutputStream().write(b, 0, num);
+            }
+            response.getOutputStream().flush();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

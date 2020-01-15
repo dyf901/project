@@ -6,21 +6,17 @@
     <!-- 查看兑换信息 -->
     <select id="find_conversion" parameterType="java.util.Map" resultType="com.zty.project.entity.Conversion">
 		<bind name="page" value="pageSize*(pageNo-1)"></bind>
-		select c.*,s.name as sname,d.name as dname,l.name as cname from conversion c
+		select c.*,s.name as sname,d.name as dname,l.commodity_name as cname from conversion c
 		inner join staff s on c.sid=s.id
 		inner join department d on c.did=d.id
 		inner join commodity l on c.cid=l.id
-		<where>
-			<if test="name!=null and name!=''">
-				s.name like concat("%",#{name},"%")
-			</if>
-		</where>
-		limit #{page},#{pigeSzie}
+		limit #{page},#{pageSize}
 	</select>
 
 	<!--统计总数-->
 	<select id="total" resultType="long">
-		select count (*) conversion
+		select count(*) from conversion
+
 	</select>
 
     <!-- 增加兑换信息 -->
@@ -31,10 +27,10 @@
     <!-- 查找个人的兑换信息 -->
     <select id="find_conversion_sid" parameterType="java.util.Map" resultType="com.zty.project.entity.Conversion">
 		<bind name="page" value="pageSize*(pageNo-1)"></bind>
-		select c.*,s.name as sname,d.name as dname,l.name as cname from conversion c
+		select c.*,s.name as sname,d.name as dname,l.commodity_name as cname from conversion c
 		inner join staff s on c.sid=s.id
 		inner join department d on c.did=d.id
 		inner join commodity l on c.cid=l.id
-		limit #{page},#{pigeSzie}
+		limit #{page},#{pageSize}
   	</select>
 </mapper>

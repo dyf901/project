@@ -37,25 +37,8 @@ public class CommodityController {
 
     @ApiOperation(value = "增加商品",notes = "")
     @PostMapping("add_commodity")
-    public boolean add_commodity(@RequestParam("file") MultipartFile file,Commodity commodity){
-        Map map =new HashMap();
-        map.put("commodity_name",commodity.getCommodity_name());
-        map.put("price",commodity.getPrice());
-        String oldFileName = file.getOriginalFilename();
-        int lastDotIndex = oldFileName.lastIndexOf(".");
-        String extName = oldFileName.substring(lastDotIndex);
-        String newName = UUID.randomUUID() + extName;
-        map.put("url",newName);
-        File excelFile =
-                new File("E:\\Test\\"//   /root/img/
-                        + newName);
-        try {
-            file.transferTo(excelFile);
-            return commodityService.add_commodity(map)==1;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
+    public boolean add_commodity(@RequestBody Map map){
+       return commodityService.add_commodity(map)==1;
     }
 
     @ApiOperation(value = "修改商品状态  上架",notes = "")
@@ -96,5 +79,28 @@ public class CommodityController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @ApiOperation(value = "上传", notes = "")
+    @PostMapping("/upload")
+    public String upload(@RequestParam("file") MultipartFile file) {
+        String oldFileName = file.getOriginalFilename();
+        int lastDotIndex = oldFileName.lastIndexOf(".");
+        String extName = oldFileName.substring(lastDotIndex);
+        String newName = UUID.randomUUID() + extName;
+        //String newName="http://localhost:8800/staff/find_img?img_url="+oldFileName;
+
+        File excelFile =
+                new File("E:\\Test\\"//   /root/img/
+                        + newName);
+        try {
+            file.transferTo(excelFile);
+
+            return newName;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "false";
     }
 }

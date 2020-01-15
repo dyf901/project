@@ -27,12 +27,12 @@
 
     <!-- 修改商品信息 状态改为0 -->
     <update id="update_commodity_active0" parameterType="java.util.Map">
-  		update commodity set active=0,up_time=null,dn_time=now() where id=#{id}
+  		update commodity set active=0,up_time=null where id=#{id}
   	</update>
 
     <!-- 修改商品信息 状态改为1 -->
     <update id="update_commodity_active1" parameterType="java.util.Map">
-  		update commodity set active=1,up_time=now(),dn_time=null where id=#{id}
+  		update commodity set active=1,up_time=now() where id=#{id}
   	</update>
 
     <!-- 下拉框查询数据 -->
