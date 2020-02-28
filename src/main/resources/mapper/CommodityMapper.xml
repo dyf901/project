@@ -25,7 +25,6 @@
   		insert into commodity (commodity_name,up_time,price,url) values(#{commodity_name},now(),#{price},#{url})
   	</insert>
 
-
     <!-- 修改商品信息 状态改为0 -->
     <update id="update_commodity_active0" parameterType="java.util.Map">
   		update commodity set active=0,up_time=null where id=#{id}

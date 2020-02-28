@@ -4,6 +4,7 @@ import com.zty.project.entity.Riskshow;
 import com.zty.project.entity.Staff;
 import com.zty.project.page.Page;
 import com.zty.project.service.RiskshowService;
+import com.zty.project.service.StaffService;
 import com.zty.project.util.Msg;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,6 +26,9 @@ import java.util.UUID;
 public class RiskshowController {
     @Autowired
     private RiskshowService riskshowService;
+
+    @Autowired
+    private StaffService staffService;
 
     @ApiOperation(value = "分页查询隐患风险信息", notes = "测试数据:{\"pageNo\": 1,\n" +
             "  \"pageSize\": 10}")
@@ -150,7 +154,7 @@ public class RiskshowController {
         map.put("remake",riskshow.getRemark());
         FileOutputStream fout = null;
         InputStream in = null;
-        String path = "E:/Test/";
+        String path = "E:/Test/";// /root/img/
         try {
             int count = 1;
             for (MultipartFile file : files) {
@@ -249,13 +253,8 @@ public class RiskshowController {
 
     @ApiOperation(value = "查找个人隐患记录",notes = "")
     @PostMapping("find_riskshow_sid")
-    public Page<Riskshow> find_riskshow_sid(@RequestBody Map map){
-        Page<Riskshow> page = new Page<Riskshow>();
-        page.setPageNo((Integer) map.get("pageNo"));
-        page.setPageSize((Integer) map.get("pageSize"));
-        page.setItems(riskshowService.find_riskshow(map));
-        page.setTotal(riskshowService.total(map));
-        return page;
+    public List<Riskshow> find_riskshow_sid(@RequestBody Map map){
+        return riskshowService.find_riskshow_sid(map);
     }
 
     @ApiOperation(value = "查找员工照片", notes = "测试数据:{\"name\":\"安全行为之星系统.pdf\"}")
@@ -278,5 +277,19 @@ public class RiskshowController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @ApiOperation(value = "修改隐患信息审核状态有效/无效(同时给予积分)",notes = "")
+    @PostMapping("/upd_state")
+    public boolean upd_state(@RequestBody Map map){
+        System.out.println(map);
+        int i=riskshowService.upd_state(map);
+        int p=staffService.upd_end_history(map);
+        if (i==1 && p==1){
+            return true;
+        }else {
+            return false;
+        }
+
     }
 }

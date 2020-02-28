@@ -20,6 +20,7 @@
                 and r.station_id=#{station_id}
             </if>
         </where>
+        ORDER BY uptime DESC
         limit #{page},#{pageSize}
     </select>
 
@@ -63,7 +64,8 @@
         inner join risk b on r.risk_id=b.id
         inner join station s on r.station_id=s.id
         inner join project p on r.project_id=p.id
-        where sid=#{sid}
+        where r.sid=#{sid}
+        ORDER BY uptime DESC;
     </select>
 
 
@@ -133,5 +135,13 @@
 		select count(*) from riskshow  where date_format(uptime,'%Y-%m')=date_format(now(),'%Y-%m') and state='有效'
 	</select>
     <!--前端展示页数据显示-->
+
+    <!--修改有效/无效状态-->
+    <update id="upd_state" parameterType="java.util.Map">
+        update riskshow set state=#{state},price=#{price} where id=#{id}
+    </update>
+
+
+
 
 </mapper>

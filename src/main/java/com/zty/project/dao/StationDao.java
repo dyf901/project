@@ -29,4 +29,7 @@ public interface StationDao {
 
     //计算天数
     int count(Map map);
+
+    //统计站点总数
+    int count_station();
 }

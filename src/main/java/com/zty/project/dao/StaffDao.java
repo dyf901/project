@@ -41,4 +41,16 @@ public interface StaffDao {
 
     //根据phone来查询员工信息
     Staff find_staff_phone(Map map);
+
+    //根据id增加剩余和历史积分
+    int upd_end_history(Map map);
+
+    //统计总人数
+    int count_staff();
+
+    //统计男生人数
+    int count_staff_man();
+
+    //统计女生人数
+    int count_staff_gril();
 }

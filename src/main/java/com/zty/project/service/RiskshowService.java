@@ -128,4 +128,11 @@ public class RiskshowService implements RiskshowDao {
     public int count_riskshow_true() {
         return riskshowDao.count_riskshow_true();
     }
+
+    @Override
+    public int upd_state(Map map) {
+        return riskshowDao.upd_state(map);
+    }
+
+
 }

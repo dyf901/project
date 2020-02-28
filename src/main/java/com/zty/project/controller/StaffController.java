@@ -210,6 +210,7 @@ public class StaffController {
         }else {
             if(staff.getPassword().equals(map.get("password"))){
                 msg.setMessage("登录成功!");
+                msg.setData(staff);
                 return msg;
             }else {
                 msg.setMessage("密码错误,登录失败!");

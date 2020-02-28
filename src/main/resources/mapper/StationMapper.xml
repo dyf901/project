@@ -48,4 +48,9 @@
     <select id="count" parameterType="java.util.Map" resultType="int">
         select datediff(#{end_time},#{start_time})
     </select>
+
+    <!--统计站点总数-->
+    <select id="count_station" resultType="int">
+        select count(*) from station
+    </select>
 </mapper>   

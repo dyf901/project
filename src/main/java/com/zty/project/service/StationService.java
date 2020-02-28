@@ -48,4 +48,7 @@ public class StationService {
     public int count(Map map) {
         return stationDao.count(map);
     }
+
+    //统计站点总数
+    public int count_station(){return stationDao.count_station();}
 }

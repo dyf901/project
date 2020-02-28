@@ -70,4 +70,24 @@ public class StaffService implements StaffDao{
     public Staff find_staff_phone(Map map) {
         return staffDao.find_staff_phone(map);
     }
+
+    @Override
+    public int upd_end_history(Map map) {
+        return staffDao.upd_end_history(map);
+    }
+
+    @Override
+    public int count_staff() {
+        return staffDao.count_staff();
+    }
+
+    @Override
+    public int count_staff_man() {
+        return staffDao.count_staff_man();
+    }
+
+    @Override
+    public int count_staff_gril() {
+        return staffDao.count_staff_gril();
+    }
 }

@@ -67,4 +67,10 @@ public interface RiskshowDao {
 
     //查询当前月审核通过的隐患条数
     int count_riskshow_true();
+    //
+
+
+
+    //修改隐患信息审核状态有效/无效
+    int upd_state(Map map);
 }

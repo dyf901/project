@@ -6,13 +6,15 @@ import com.zty.project.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 public class UserService {
     @Autowired
     private UserDao userDao;
 
-    public User findByUsername(User user) {
-        return userDao.findByUsername(user);
+    public User findByUsername(Map map) {
+        return userDao.findByUsername(map);
     }
 
     public User findUserById(User user) {

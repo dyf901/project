@@ -90,4 +90,24 @@
     <select id="find_staff_phone" parameterType="java.util.Map" resultType="com.zty.project.entity.Staff">
         select * from staff where phone=#{phone}
     </select>
+    
+    <!--根据id增加积分-->
+    <update id="upd_end_history" parameterType="java.util.Map">
+        update staff set `end`=`end`+#{price},`history`=`history`+#{price} where id=#{sid}
+    </update>
+
+    <!--统计总人数-->
+    <select id="count_staff" resultType="int">
+        select count(*) from staff
+    </select>
+
+    <!--统计男生人数-->
+    <select id="count_staff_man" resultType="int">
+        select count(*) from staff where sex='男'
+    </select>
+
+    <!--统计女生人数-->
+    <select id="count_staff_girl" resultType="int">
+        select count(*) from staff where sex='女'
+    </select>
 </mapper>
