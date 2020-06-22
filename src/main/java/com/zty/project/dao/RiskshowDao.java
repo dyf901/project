@@ -27,7 +27,6 @@ public interface RiskshowDao {
     List<Riskshow> find_riskshow_sid(Map map);
 
 
-
     //前端展示数据
     //查找积分前三
     List<Map> find_riskshow_awarda();
@@ -68,7 +67,6 @@ public interface RiskshowDao {
     //查询当前月审核通过的隐患条数
     int count_riskshow_true();
     //
-
 
 
     //修改隐患信息审核状态有效/无效

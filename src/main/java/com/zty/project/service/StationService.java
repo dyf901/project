@@ -50,5 +50,7 @@ public class StationService {
     }
 
     //统计站点总数
-    public int count_station(){return stationDao.count_station();}
+    public int count_station() {
+        return stationDao.count_station();
+    }
 }

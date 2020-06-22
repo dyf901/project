@@ -5,31 +5,40 @@
 <mapper namespace="com.zty.project.dao.ConversionDao">
     <!-- 查看兑换信息 -->
     <select id="find_conversion" parameterType="java.util.Map" resultType="com.zty.project.entity.Conversion">
-		<bind name="page" value="pageSize*(pageNo-1)"></bind>
-		select c.*,s.name as sname,d.name as dname,l.commodity_name as cname from conversion c
-		inner join staff s on c.sid=s.id
-		inner join department d on c.did=d.id
-		inner join commodity l on c.cid=l.id
-		limit #{page},#{pageSize}
-	</select>
+        <bind name="page" value="pageSize*(pageNo-1)"></bind>
+        select c.*,s.name as sname,d.name as dname,l.commodity_name as cname from conversion c
+        inner join staff s on c.sid=s.id
+        inner join department d on c.did=d.id
+        inner join commodity l on c.cid=l.id
+        limit #{page},#{pageSize}
+    </select>
 
-	<!--统计总数-->
-	<select id="total" resultType="long">
-		select count(*) from conversion
-	</select>
+    <!--统计总数-->
+    <select id="total" resultType="long">
+        select count(*) from conversion
+    </select>
 
     <!-- 增加兑换信息 -->
     <insert id="add_conversion" parameterType="java.util.Map">
-		insert into conversion (did,sid,conversion_time,cid) values (#{did},#{sid},now(),#{cid})
-	</insert>
+        insert into conversion (did,sid,conversion_time,cid,`type`) values (#{did},#{sid},now(),#{cid},#{type})
+    </insert>
 
     <!-- 查找个人的兑换信息 -->
     <select id="find_conversion_sid" parameterType="java.util.Map" resultType="com.zty.project.entity.Conversion">
-		select c.*,s.name as sname,d.name as dname,l.commodity_name as cname from conversion c
-		inner join staff s on c.sid=s.id
-		inner join department d on c.did=d.id
-		inner join commodity l on c.cid=l.id
-		where c.sid=#{sid}
-		ORDER BY conversion_time DESC;
-  	</select>
+        select c.*,s.name as sname,d.name as dname,l.commodity_name as cname from conversion c
+        inner join staff s on c.sid=s.id
+        inner join department d on c.did=d.id
+        inner join commodity l on c.cid=l.id
+        where c.sid=#{sid}
+        ORDER BY conversion_time DESC;
+    </select>
+
+    <!--查询兑换信息-->
+    <select id="select_conversion" parameterType="java.util.Map" resultType="com.zty.project.entity.Conversion">
+        select c.*,s.name as sname,d.name as dname,l.commodity_name as cname from conversion c
+        inner join staff s on c.sid=s.id
+        inner join department d on c.did=d.id
+        inner join commodity l on c.cid=l.id
+        ORDER BY conversion_time DESC;
+    </select>
 </mapper>

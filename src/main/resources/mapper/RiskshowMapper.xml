@@ -42,20 +42,24 @@
 
     <!--增加隐患信息-->
     <insert id="add_riskshow" parameterType="java.util.Map">
-        INSERT INTO riskshow (`risk_id`, description , `sid`, `uptime`, `station_id`, `project_id`, url, url1, url2, url3, url4, url5,url6,url7,url8)
-        VALUES (#{risk_id},#{description},#{sid},now(),#{station_id},#{project_id},#{url},#{url1},#{url2},#{url3},#{url4},#{url5},#{url6},#{url7},#{url8});
+        INSERT INTO riskshow (`risk_id`, description , `sid`, `uptime`, `station_id`, `project_id`, url, url1, url2,
+        url3, url4, url5,url6,url7,url8)
+        VALUES
+        (#{risk_id},#{description},#{sid},now(),#{station_id},#{project_id},#{url},#{url1},#{url2},#{url3},#{url4},#{url5},#{url6},#{url7},#{url8});
     </insert>
 
     <!--整改上报-->
     <update id="upd_riskshow" parameterType="java.util.Map">
-        update riskshow set remark=#{remark},url_rectify=#{url_rectify},url_rectify1=#{url_rectify1},url_rectify2=#{url_rectify2},url_rectify3=#{url_rectify3},url_rectify4=#{url_rectify4},url_rectify5=#{url_rectify5},url_rectify6=#{url_rectify6},url_rectify7=#{url_rectify7} where id=#{id}
+        update riskshow set
+        remark=#{remark},url_rectify=#{url_rectify},url_rectify1=#{url_rectify1},url_rectify2=#{url_rectify2},url_rectify3=#{url_rectify3},url_rectify4=#{url_rectify4},url_rectify5=#{url_rectify5},url_rectify6=#{url_rectify6},url_rectify7=#{url_rectify7}
+        where id=#{id}
     </update>
 
     <!-- 删除隐患信息 -->
     <delete id="del_riskshow" parameterType="java.util.Map">
-		delete from riskshow where id=#{id}
-	</delete>
-    
+        delete from riskshow where id=#{id}
+    </delete>
+
     <!--查找个人隐患信息-->
     <select id="find_riskshow_sid" parameterType="java.util.Map" resultType="com.zty.project.entity.Riskshow">
         select r.*,a.name as staff_name,b.risk_category as risk_category,s.station_name as station_name,p.project_name
@@ -72,76 +76,85 @@
     <!--前端展示页数据显示-->
     <!-- 查找积分前三 -->
     <select id="find_riskshow_awarda" resultType="java.util.Map">
-		select * from (select SUM(price) as awarda,s.* from riskshow r INNER JOIN staff s on r.sid=s.id where (date_format(uptime,'%Y-%m')=date_format(now(),'%Y-%m')) and state='有效' GROUP BY sid) as t ORDER BY t.awarda desc limit 3;
-	</select>
+        select * from (select SUM(price) as awarda,s.*,w.name as bz from riskshow r INNER JOIN staff s on r.sid=s.id
+        INNER JOIN worktype w on w.id=s.worktype_id where (date_format(uptime,'%Y-%m')=date_format(now(),'%Y-%m')) and
+        r.state='有效' GROUP BY sid) as t ORDER BY t.awarda desc limit 3;
+    </select>
 
     <!-- 积分奖励 -->
     <select id="find_riskshow_award" resultType="int">
-		select SUM(price) as award from riskshow where (date_format(uptime,'%Y-%m')=date_format(now(),'%Y-%m')) and state='有效'
-	</select>
+        select SUM(price) as award from riskshow where (date_format(uptime,'%Y-%m')=date_format(now(),'%Y-%m')) and
+        state='有效'
+    </select>
 
     <!-- 统计饼图(risk_id) -->
     <select id="find_riskshow_b" resultType="java.util.Map">
-		select count(r.id) as count,s.risk_category from riskshow r INNER join risk s on s.id=r.risk_id where (date_format(uptime,'%Y-%m')=date_format(now(),'%Y-%m')) and r.state='有效'  GROUP BY r.risk_id;
-	</select>
+        select count(r.id) as count,s.risk_category from riskshow r INNER join risk s on s.id=r.risk_id where
+        (date_format(uptime,'%Y-%m')=date_format(now(),'%Y-%m')) and r.state='有效' GROUP BY r.risk_id;
+    </select>
 
     <!-- 统计饼图 (station_id)-->
     <select id="find_riskshow_c" resultType="java.util.Map">
-		select count(r.id) as count,s.station_name from riskshow r INNER join station s on s.id=r.station_id where (date_format(uptime,'%Y-%m')=date_format(now(),'%Y-%m')) and r.state='有效'  GROUP BY r.station_id;
-	</select>
+        select count(r.id) as count,s.station_name from riskshow r INNER join station s on s.id=r.station_id where
+        (date_format(uptime,'%Y-%m')=date_format(now(),'%Y-%m')) and r.state='有效' GROUP BY r.station_id;
+    </select>
 
     <!-- 返回本月的月份 -->
     <select id="find_month" resultType="int">
-		select MONTH(CURDATE());
-	</select>
+        select MONTH(CURDATE());
+    </select>
 
     <!-- 查询当月上旬数据的条数 -->
     <select id="find_riskshow_top" resultType="int">
-		SELECT count(*) from riskshow where uptime between (select DATE_ADD(curdate(),interval -day(curdate())+1 day)) and (select DATE_ADD(curdate(),interval -day(curdate())+10 day))
-	</select>
+        SELECT count(*) from riskshow where uptime between (select DATE_ADD(curdate(),interval -day(curdate())+1 day))
+        and (select DATE_ADD(curdate(),interval -day(curdate())+10 day))
+    </select>
 
     <!-- 查询当月中旬数据的条数 -->
     <select id="find_riskshow_mid" resultType="int">
-		SELECT count(*) from riskshow where uptime between (select DATE_ADD(curdate(),interval -day(curdate())+10 day)) and (select DATE_ADD(curdate(),interval -day(curdate())+20 day))
-	</select>
+        SELECT count(*) from riskshow where uptime between (select DATE_ADD(curdate(),interval -day(curdate())+10 day))
+        and (select DATE_ADD(curdate(),interval -day(curdate())+20 day))
+    </select>
 
     <!-- 查询当月下旬数据的条数 -->
     <select id="find_riskshow_end" resultType="int">
-		SELECT count(*) from riskshow where uptime between (select DATE_ADD(curdate(),interval -day(curdate())+20 day)) and (select DATE_ADD(curdate(),interval -day(curdate())+31 day))
-	</select>
+        SELECT count(*) from riskshow where uptime between (select DATE_ADD(curdate(),interval -day(curdate())+20 day))
+        and (select DATE_ADD(curdate(),interval -day(curdate())+31 day))
+    </select>
 
     <!-- 查询当月上旬有效数据的条数 -->
     <select id="find_riskshow_top_y" resultType="int">
-		SELECT count(*) from riskshow where uptime between (select DATE_ADD(curdate(),interval -day(curdate())+1 day)) and (select DATE_ADD(curdate(),interval -day(curdate())+10 day)) and state='有效'
-	</select>
+        SELECT count(*) from riskshow where uptime between (select DATE_ADD(curdate(),interval -day(curdate())+1 day))
+        and (select DATE_ADD(curdate(),interval -day(curdate())+10 day)) and state='有效'
+    </select>
 
     <!-- 查询当月中旬有效数据的条数 -->
     <select id="find_riskshow_mid_y" resultType="int">
-		SELECT count(*) from riskshow where uptime between (select DATE_ADD(curdate(),interval -day(curdate())+10 day)) and (select DATE_ADD(curdate(),interval -day(curdate())+20 day)) and state='有效'
-	</select>
+        SELECT count(*) from riskshow where uptime between (select DATE_ADD(curdate(),interval -day(curdate())+10 day))
+        and (select DATE_ADD(curdate(),interval -day(curdate())+20 day)) and state='有效'
+    </select>
 
     <!-- 查询当月下旬有效数据的条数 -->
     <select id="find_riskshow_end_y" resultType="int">
-		SELECT count(*) from riskshow where uptime between (select DATE_ADD(curdate(),interval -day(curdate())+20 day)) and (select DATE_ADD(curdate(),interval -day(curdate())+31 day)) and state='有效'
-	</select>
+        SELECT count(*) from riskshow where uptime between (select DATE_ADD(curdate(),interval -day(curdate())+20 day))
+        and (select DATE_ADD(curdate(),interval -day(curdate())+31 day)) and state='有效'
+    </select>
 
     <!-- 查询当前月上传隐患的条数-->
     <select id="count_riskshow_all" resultType="int">
-		select count(*) from riskshow  where date_format(uptime,'%Y-%m')=date_format(now(),'%Y-%m')
-	</select>
+        select count(*) from riskshow where date_format(uptime,'%Y-%m')=date_format(now(),'%Y-%m')
+    </select>
 
     <!-- 查询当前月审核通过的隐患条数 -->
     <select id="count_riskshow_true" resultType="int">
-		select count(*) from riskshow  where date_format(uptime,'%Y-%m')=date_format(now(),'%Y-%m') and state='有效'
-	</select>
+        select count(*) from riskshow where date_format(uptime,'%Y-%m')=date_format(now(),'%Y-%m') and state='有效'
+    </select>
     <!--前端展示页数据显示-->
 
     <!--修改有效/无效状态-->
     <update id="upd_state" parameterType="java.util.Map">
         update riskshow set state=#{state},price=#{price} where id=#{id}
     </update>
-
-
 
 
 </mapper>

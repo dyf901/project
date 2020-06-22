@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service("StaffService")
-public class StaffService implements StaffDao{
+public class StaffService implements StaffDao {
     @Autowired
     private StaffDao staffDao;
 
@@ -87,7 +87,7 @@ public class StaffService implements StaffDao{
     }
 
     @Override
-    public int count_staff_gril() {
-        return staffDao.count_staff_gril();
+    public int count_staff_girl() {
+        return staffDao.count_staff_girl();
     }
 }

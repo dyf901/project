@@ -19,7 +19,7 @@ public class WorkTypeController {
     @Autowired
     private WorkTypeDao workTypeDao;
 
-    @ApiOperation(value = "分页查询工种", notes = "测试数据:{\"pageNo\": 1,\n" +
+    @ApiOperation(value = "分页查询工种" , notes = "测试数据:{\"pageNo\": 1,\n" +
             "  \"pageSize\": 10}")
     @PostMapping("/find_worktype")
     public Page<WorkType> find_worktype(@RequestBody Map map) {
@@ -31,7 +31,7 @@ public class WorkTypeController {
         return page;
     }
 
-    @ApiOperation(value = "增加工种", notes = "测试数据:{{\"name\":\"电工\", \n" +
+    @ApiOperation(value = "增加工种" , notes = "测试数据:{{\"name\":\"电工\", \n" +
             "\"content\":\"负责维修施工中遇到的电路问题\", \n" +
             "\"department_id\":1,\n" +
             "\"remark\":\"高危工种\"}}")
@@ -40,13 +40,13 @@ public class WorkTypeController {
         return workTypeDao.add_worktype(map) == 1;
     }
 
-    @ApiOperation(value = "删除工种", notes = "测试数据:{\"id\":3}")
+    @ApiOperation(value = "删除工种" , notes = "测试数据:{\"id\":3}")
     @PostMapping("/del_worktype")
     public boolean del_worktype(@RequestBody Map map) {
         return workTypeDao.del_worktype(map) == 1;
     }
 
-    @ApiOperation(value = "修改工种", notes = "测试数据:{\"id\":1,\n" +
+    @ApiOperation(value = "修改工种" , notes = "测试数据:{\"id\":1,\n" +
             "\"name\":\"焊工\",\n" +
             "\"content\":\"对主管每日安排的产品进行焊接作业\",\n" +
             "\"department_id\":\"1\",\n" +
@@ -56,7 +56,7 @@ public class WorkTypeController {
         return workTypeDao.upd_worktype(map) == 1;
     }
 
-    @ApiOperation(value = "下拉框查询工种", notes = "测试数据:")
+    @ApiOperation(value = "下拉框查询工种" , notes = "测试数据:")
     @PostMapping("/select_worktype")
     public List<WorkType> select_worktype() {
         return workTypeDao.select_worktype();

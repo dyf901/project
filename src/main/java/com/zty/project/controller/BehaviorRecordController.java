@@ -23,7 +23,7 @@ public class BehaviorRecordController {
     @Autowired
     private StaffDao staffDao;
 
-    @ApiOperation(value = "分页查询行为记录", notes = "")
+    @ApiOperation(value = "分页查询行为记录" , notes = "")
     @PostMapping("/find_behaviorrecord")
     public Page<BehaviorRecord> find_behaviorrecord(@RequestBody Map map) {
         Page<BehaviorRecord> page = new Page<BehaviorRecord>();
@@ -34,28 +34,28 @@ public class BehaviorRecordController {
         return page;
     }
 
-    @ApiOperation(value = "增加行为记录", notes = "")
+    @ApiOperation(value = "增加行为记录" , notes = "")
     @PostMapping("/add_behaviorrecord")
     public String add_behaviorrecord(@RequestBody Map map) {
         System.out.println(map.size());
         Staff staff = staffDao.find_staff_card(map);
         System.out.println(staff);
-        map.put("staff_id", staff.getId());
+        map.put("staff_id" , staff.getId());
         if (staff.getName().equals(map.get("name"))) {
-            map.put("staff_id", staffDao.find_staff_card(map).getId());
+            map.put("staff_id" , staffDao.find_staff_card(map).getId());
             behaviorRecordDao.add_behaviorrecord(map);
             return "增加成功!";
         }
         return "增加失败,身份证号与名字不对应!";
     }
 
-    @ApiOperation(value = "删除行为记录", notes = "")
+    @ApiOperation(value = "删除行为记录" , notes = "")
     @PostMapping("/del_behaviorrecord")
     public boolean del_behaviorrecord(@RequestBody Map map) {
         return behaviorRecordDao.del_behaviorrecord(map) == 1;
     }
 
-    @ApiOperation(value = "修改行为记录", notes = "")
+    @ApiOperation(value = "修改行为记录" , notes = "")
     @PostMapping("/upd_behaviorrecord")
     public boolean upd_behaviorrecord(@RequestBody Map map) {
         return behaviorRecordDao.upd_behaviorrecord(map) == 1;

@@ -24,10 +24,10 @@ public class CommodityController {
     @Autowired
     private CommodityService commodityService;
 
-    @ApiOperation(value = "分页模糊查询商品信息",notes = "")
+    @ApiOperation(value = "分页模糊查询商品信息" , notes = "")
     @PostMapping("find_commodity")
-    public Page<Commodity> find_commodity(@RequestBody Map map){
-        Page<Commodity> page =new Page<Commodity>();
+    public Page<Commodity> find_commodity(@RequestBody Map map) {
+        Page<Commodity> page = new Page<Commodity>();
         page.setPageNo((Integer) map.get("pageNo"));
         page.setPageSize((Integer) map.get("pageSize"));
         page.setTotal(commodityService.total());
@@ -35,38 +35,38 @@ public class CommodityController {
         return page;
     }
 
-    @ApiOperation(value = "增加商品",notes = "")
+    @ApiOperation(value = "增加商品" , notes = "")
     @PostMapping("add_commodity")
-    public boolean add_commodity(@RequestBody Map map){
-       return commodityService.add_commodity(map)==1;
+    public boolean add_commodity(@RequestBody Map map) {
+        return commodityService.add_commodity(map) == 1;
     }
 
-    @ApiOperation(value = "修改商品状态  上架",notes = "")
+    @ApiOperation(value = "修改商品状态  上架" , notes = "")
     @PostMapping("update_commodity_active0")
-    public boolean update_commodity_active0(@RequestBody Map map){
-        return commodityService.update_commodity_active0(map)==1;
+    public boolean update_commodity_active0(@RequestBody Map map) {
+        return commodityService.update_commodity_active0(map) == 1;
     }
 
-    @ApiOperation(value = "修改商品状态  下架",notes = "")
+    @ApiOperation(value = "修改商品状态  下架" , notes = "")
     @PostMapping("update_commodity_active1")
-    public boolean update_commodity_active1(@RequestBody Map map){
-        return commodityService.update_commodity_active1(map)==1;
+    public boolean update_commodity_active1(@RequestBody Map map) {
+        return commodityService.update_commodity_active1(map) == 1;
     }
 
-    @ApiOperation(value = "下拉框查询商品信息",notes = "")
+    @ApiOperation(value = "下拉框查询商品信息" , notes = "")
     @PostMapping("select_commodity")
-    public List<Commodity> select_commodity(){
+    public List<Commodity> select_commodity() {
         return commodityService.select_commodity();
     }
 
-    @ApiOperation(value = "查找商品照片", notes = "测试数据:{\"name\":\"安全行为之星系统.pdf\"}")
+    @ApiOperation(value = "查找商品照片" , notes = "测试数据:{\"name\":\"安全行为之星系统.pdf\"}")
     @GetMapping("/find_img")
     public void find_img(@RequestParam String img_url, HttpServletResponse response) {
         try {
             BufferedInputStream bis =
                     new BufferedInputStream(
                             new FileInputStream(
-                                    new File("E:\\Test\\" + img_url)));///root/img/
+                                    new File("/root/img/" + img_url)));///root/img/
             int num;
             byte[] b = new byte[1024];
 
@@ -81,7 +81,7 @@ public class CommodityController {
         }
     }
 
-    @ApiOperation(value = "上传", notes = "")
+    @ApiOperation(value = "上传" , notes = "")
     @PostMapping("/upload")
     public String upload(@RequestParam("file") MultipartFile file) {
         String oldFileName = file.getOriginalFilename();
@@ -91,7 +91,7 @@ public class CommodityController {
         //String newName="http://localhost:8800/staff/find_img?img_url="+oldFileName;
 
         File excelFile =
-                new File("E:\\Test\\"//   /root/img/
+                new File("/root/img/"//   /root/img/
                         + newName);
         try {
             file.transferTo(excelFile);

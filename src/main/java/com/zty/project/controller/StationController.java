@@ -23,7 +23,7 @@ public class StationController {
     @Autowired
     private StationDao stationDao;
 
-    @ApiOperation(value = "分页模糊查询站点信息", notes = "{\"pageNo\": 1, \n" +
+    @ApiOperation(value = "分页模糊查询站点信息" , notes = "{\"pageNo\": 1, \n" +
             " \"pageSize\":10}")
     @PostMapping("find_station")
     public Page<Station> find_station(@RequestBody Map map) {
@@ -35,14 +35,14 @@ public class StationController {
         return page;
     }
 
-    @ApiOperation(value = "增加站点信息", notes = "{\"station_name\":\"鹿城路站（06标）\", \"start_time\":\"2019-06-15\", \"end_time\":\"2020-06-15\", \"station_principal\":\"晋铁科技\", \"station_area\":200000}")
+    @ApiOperation(value = "增加站点信息" , notes = "{\"station_name\":\"鹿城路站（06标）\", \"start_time\":\"2019-06-15\", \"end_time\":\"2020-06-15\", \"station_principal\":\"晋铁科技\", \"station_area\":200000}")
     @PostMapping("add_station")
     public boolean add_station(@RequestBody Map map) {
-        map.put("station_time", stationDao.count(map));
+        map.put("station_time" , stationDao.count(map));
         return stationDao.add_station(map) == 1;
     }
 
-    @ApiOperation(value = "修改站点信息", notes = "{\"station_name\":\"鹿城路站\",\n" +
+    @ApiOperation(value = "修改站点信息" , notes = "{\"station_name\":\"鹿城路站\",\n" +
             "\"station_time\":365,\n" +
             "\"start_time\":\"2019-06-15\",\n" +
             "\"end_time\":\"2020-06-15\",\n" +
@@ -51,17 +51,17 @@ public class StationController {
             "\"id\":1}")
     @PostMapping("upd_station")
     public boolean upd_station(@RequestBody Map map) {
-        map.put("station_time", stationDao.count(map));
+        map.put("station_time" , stationDao.count(map));
         return stationDao.upd_station(map) == 1;
     }
 
-    @ApiOperation(value = "删除站点信息", notes = "测试数据:{\"id\":1}")
+    @ApiOperation(value = "删除站点信息" , notes = "测试数据:{\"id\":1}")
     @PostMapping("del_station")
     public boolean del_station(@RequestBody Map map) {
         return stationDao.del_station(map) == 1;
     }
 
-    @ApiOperation(value = "下拉框查找站点信息", notes = "测试数据:")
+    @ApiOperation(value = "下拉框查找站点信息" , notes = "测试数据:")
     @PostMapping("select_station")
     public List<Station> select_station() {
         return stationDao.select_station();

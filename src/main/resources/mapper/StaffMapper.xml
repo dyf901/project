@@ -90,7 +90,7 @@
     <select id="find_staff_phone" parameterType="java.util.Map" resultType="com.zty.project.entity.Staff">
         select * from staff where phone=#{phone}
     </select>
-    
+
     <!--根据id增加积分-->
     <update id="upd_end_history" parameterType="java.util.Map">
         update staff set `end`=`end`+#{price},`history`=`history`+#{price} where id=#{sid}

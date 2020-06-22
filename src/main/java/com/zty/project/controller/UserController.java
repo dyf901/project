@@ -27,20 +27,20 @@ public class UserController {
     @Autowired
     TokenService tokenService;
 
-    @ApiOperation(value = "登录接口", notes = "测试数据:{\"username\":\"admin\",\"password\":\"123456\"}")
+    @ApiOperation(value = "登录接口" , notes = "测试数据:{\"username\":\"admin\",\"password\":\"123456\"}")
     @PostMapping("/login")
     public Msg login(@RequestBody Map map) {
         System.out.println(map);
-        Msg msg=new Msg();
+        Msg msg = new Msg();
         User user = userDao.findByUsername(map);
         if (user == null) {
             msg.setMessage("登录失败,用户不存在");
             return msg;
         } else {
-            if(user.getPassword().equals(map.get("password"))){
+            if (user.getPassword().equals(map.get("password"))) {
                 msg.setMessage("登录成功!");
                 return msg;
-            }else {
+            } else {
                 msg.setMessage("密码错误,登录失败!");
                 return msg;
             }

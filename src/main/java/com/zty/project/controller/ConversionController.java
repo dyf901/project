@@ -32,7 +32,7 @@ public class ConversionController {
 
     @ApiOperation(value = "分页模糊查询兑换记录")
     @PostMapping("find_conversion")
-    public Page<Conversion> find_conversion(@RequestBody Map map){
+    public Page<Conversion> find_conversion(@RequestBody Map map) {
         Page<Conversion> page = new Page<Conversion>();
         page.setPageNo((Integer) map.get("pageNo"));
         page.setPageSize((Integer) map.get("pageSize"));
@@ -41,34 +41,35 @@ public class ConversionController {
         return page;
     }
 
-    @ApiOperation(value = "增加兑换记录",notes = "")
+    @ApiOperation(value = "增加兑换记录" , notes = "")
     @PostMapping("add_conversion")
-    public Msg add_conversion(@RequestBody Map map){
+    public Msg add_conversion(@RequestBody Map map) {
         Msg msg = new Msg();
-        Staff staff =staffDao.find_id(map);
-        Commodity commodity=commodityDao.select_commodity_id(map);
-        map.put("did",staff.getDepartment_id());
-        map.put("cid",commodity.getId());
-        if(staff.getEnd()>=commodity.getPrice()){
-            int i=conversionDao.add_conversion(map);
-            if(i==1){
-                map.put("price",commodity.getPrice());
+        Staff staff = staffDao.find_id(map);
+        Commodity commodity = commodityDao.select_commodity_id(map);
+        map.put("type" , staff.getType());
+        map.put("did" , staff.getDepartment_id());
+        map.put("cid" , commodity.getId());
+        if (staff.getEnd() >= commodity.getPrice()) {
+            int i = conversionDao.add_conversion(map);
+            if (i == 1) {
+                map.put("price" , commodity.getPrice());
                 staffDao.upd_end(map);
                 msg.setMessage("兑换成功!");
                 return msg;
-            }else {
+            } else {
                 msg.setMessage("兑换失败!");
                 return msg;
             }
-        }else {
+        } else {
             msg.setMessage("积分不足兑换失败!");
             return msg;
         }
     }
 
-    @ApiOperation(value = "查找个人兑换记录",notes = "")
+    @ApiOperation(value = "查找个人兑换记录" , notes = "")
     @PostMapping("find_conversion_sid")
-    public List<Conversion> find_conversion_sid(@RequestBody Map map){
+    public List<Conversion> find_conversion_sid(@RequestBody Map map) {
         return conversionDao.find_conversion_sid(map);
     }
 }

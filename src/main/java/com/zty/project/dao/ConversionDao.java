@@ -17,4 +17,7 @@ public interface ConversionDao {
 
     //查找个人的兑换信息
     List<Conversion> find_conversion_sid(Map map);
+
+    //查找兑换信息
+    List<Conversion> select_conversion();
 }

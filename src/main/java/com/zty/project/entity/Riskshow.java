@@ -31,7 +31,7 @@ public class Riskshow {
     private String description, uptime, active, state, remark;
     private String url, url1, url2, url3, url4, url5, url6, url7, url8;
     private String url_rectify, url_rectify1, url_rectify2, url_rectify3, url_rectify4, url_rectify5, url_rectify6, url_rectify7, url_rectify8;
-    private String staff_name,risk_category,station_name,project_name;
+    private String staff_name, risk_category, station_name, project_name;
 
     public Riskshow() {
         super();

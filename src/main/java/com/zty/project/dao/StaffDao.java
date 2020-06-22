@@ -52,5 +52,5 @@ public interface StaffDao {
     int count_staff_man();
 
     //统计女生人数
-    int count_staff_gril();
+    int count_staff_girl();
 }

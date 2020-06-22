@@ -20,7 +20,7 @@ public class DepartmentController {
     @Autowired
     private DepartmentDao departmentDao;
 
-    @ApiOperation(value = "分页查询部门类型信息", notes = "测试数据:{\"pageNo\": 1,\n" +
+    @ApiOperation(value = "分页查询部门类型信息" , notes = "测试数据:{\"pageNo\": 1,\n" +
             "  \"pageSize\": 10}")
     @PostMapping("/find_department")
     public Page<Department> find_department(@RequestBody Map map) {
@@ -32,7 +32,7 @@ public class DepartmentController {
         return page;
     }
 
-    @ApiOperation(value = "增加部门类型信息", notes = "测试数据:{\"name\":\"施工部\",\n" +
+    @ApiOperation(value = "增加部门类型信息" , notes = "测试数据:{\"name\":\"施工部\",\n" +
             "\"deptnum\":\"DX308\",\n" +
             "\"depthead\":\"晋铁智能科技\",\n" +
             "\"headphone\":\"13000000000\",\n" +
@@ -42,13 +42,13 @@ public class DepartmentController {
         return departmentDao.add_department(map) == 1;
     }
 
-    @ApiOperation(value = "删除部门类型信息", notes = "测试数据:{\"id\":1}")
+    @ApiOperation(value = "删除部门类型信息" , notes = "测试数据:{\"id\":1}")
     @PostMapping("/del_department")
     public boolean del_department(@RequestBody Map map) {
         return departmentDao.del_department(map) == 1;
     }
 
-    @ApiOperation(value = "修改部门类型信息", notes = "测试数据:{\"id\":2,\n" +
+    @ApiOperation(value = "修改部门类型信息" , notes = "测试数据:{\"id\":2,\n" +
             "\"deptnum\":\"1\",\n" +
             "\"name\":\"1\",\n" +
             "\"percount\":1,\n" +
@@ -60,7 +60,7 @@ public class DepartmentController {
         return departmentDao.upd_department(map) == 1;
     }
 
-    @ApiOperation(value = "下拉框查询部门", notes = "测试数据:")
+    @ApiOperation(value = "下拉框查询部门" , notes = "测试数据:")
     @PostMapping("/select_department")
     public List<Department> select_department() {
         return departmentDao.select_department();

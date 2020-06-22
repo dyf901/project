@@ -21,6 +21,7 @@ history   历史积分
 end   剩余积分
 password   登录密码
 state   状态
+type    班组
 
 
 departmentname  部门名称
@@ -30,12 +31,13 @@ public class Staff {
     private int id, history, end, department_id, worktype_id;
     private String name, nation, card, address, phone, sos_name, sos_ship, sos_phone, createtime, img_url, password, state, sex, new_url;
     private String departmentname, worktypename;
+    private String type;
 
     public Staff() {
         super();
     }
 
-    public Staff(int id, int history, int end, int department_id, int worktype_id, String name, String nation, String card, String address, String phone, String sos_name, String sos_ship, String sos_phone, String createtime, String img_url, String password, String state, String sex, String new_url, String departmentname, String worktypename) {
+    public Staff(int id, int history, int end, int department_id, int worktype_id, String name, String nation, String card, String address, String phone, String sos_name, String sos_ship, String sos_phone, String createtime, String img_url, String password, String state, String sex, String new_url, String departmentname, String worktypename, String type) {
         this.id = id;
         this.history = history;
         this.end = end;
@@ -57,6 +59,7 @@ public class Staff {
         this.new_url = new_url;
         this.departmentname = departmentname;
         this.worktypename = worktypename;
+        this.type = type;
     }
 
     public int getId() {
@@ -227,6 +230,14 @@ public class Staff {
         this.new_url = new_url;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "Staff{" +
@@ -251,6 +262,7 @@ public class Staff {
                 ", new_url='" + new_url + '\'' +
                 ", departmentname='" + departmentname + '\'' +
                 ", worktypename='" + worktypename + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 }

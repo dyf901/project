@@ -12,22 +12,27 @@ public class ConversionService {
     private ConversionDao conversionDao;
 
     //查看兑换信息
-    public List<Conversion> find_conversion(Map map){
+    public List<Conversion> find_conversion(Map map) {
         return conversionDao.find_conversion(map);
     }
 
     //统计总数
-    public long total(){
+    public long total() {
         return conversionDao.total();
     }
 
     //增加兑换信息
-    public int add_conversion(Map map){
+    public int add_conversion(Map map) {
         return conversionDao.add_conversion(map);
     }
 
     //查找个人的兑换信息
-    public List<Conversion> find_conversion_sid(Map map){
+    public List<Conversion> find_conversion_sid(Map map) {
         return conversionDao.find_conversion_sid(map);
+    }
+
+    //查找兑换信息
+    public List<Conversion> select_conversion() {
+        return conversionDao.select_conversion();
     }
 }

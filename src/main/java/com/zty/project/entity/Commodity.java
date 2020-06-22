@@ -1,22 +1,23 @@
 package com.zty.project.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+
 /*
-* 商品表实体类
-* commodity   商品表
-* id    商品id
-* commodity_name    商品名称
-* up_time   上架时间
-* price     价格
-* url       商品图片
-* active    状态
-* */
+ * 商品表实体类
+ * commodity   商品表
+ * id    商品id
+ * commodity_name    商品名称
+ * up_time   上架时间
+ * price     价格
+ * url       商品图片
+ * active    状态
+ * */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Commodity {
-    private int id,price,active;
-    private String commodity_name,up_time,url;
+    private int id, price, active;
+    private String commodity_name, up_time, url;
 
-    public Commodity(){
+    public Commodity() {
         super();
     }
 

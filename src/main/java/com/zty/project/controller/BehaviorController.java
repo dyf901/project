@@ -20,7 +20,7 @@ public class BehaviorController {
     @Autowired
     private BehaviorDao behaviorDao;
 
-    @ApiOperation(value = "分页查询行为类型信息", notes = "测试数据:{\"pageNo\": 1,\n" +
+    @ApiOperation(value = "分页查询行为类型信息" , notes = "测试数据:{\"pageNo\": 1,\n" +
             "  \"pageSize\": 10}")
     @PostMapping("/find_behavior")
     public Page<Behavior> find_behavior(@RequestBody Map map) {
@@ -32,7 +32,7 @@ public class BehaviorController {
         return page;
     }
 
-    @ApiOperation(value = "增加行为类型信息", notes = "测试数据:{{\"name\":\"表扬\",\n" +
+    @ApiOperation(value = "增加行为类型信息" , notes = "测试数据:{{\"name\":\"表扬\",\n" +
             "\"detail\":\"给予员工达标的嘉奖\",\n" +
             "\"remark\":\"请详细记录受嘉奖的行为。\"}}")
     @PostMapping("/add_behavior")
@@ -40,7 +40,7 @@ public class BehaviorController {
         return behaviorDao.add_behavior(map) == 1;
     }
 
-    @ApiOperation(value = "修改行为类型信息", notes = "测试数据:{\"id\":8,\n" +
+    @ApiOperation(value = "修改行为类型信息" , notes = "测试数据:{\"id\":8,\n" +
             "\"name\":\"聚众闹事\",\n" +
             "\"detail\":\"肆意挑衅，随意殴打、骚扰他人或任意损毁、占用公共财物\",\n" +
             "\"remark\":\"123\"}")
@@ -49,13 +49,13 @@ public class BehaviorController {
         return behaviorDao.upd_behavior(map) == 1;
     }
 
-    @ApiOperation(value = "删除行为类型信息", notes = "测试数据:{\"id\":9}")
+    @ApiOperation(value = "删除行为类型信息" , notes = "测试数据:{\"id\":9}")
     @PostMapping("/del_behavior")
     public boolean del_behavior(@RequestBody Map map) {
         return behaviorDao.del_behavior(map) == 1;
     }
 
-    @ApiOperation(value = "下拉框查询行为类型", notes = "测试数据:")
+    @ApiOperation(value = "下拉框查询行为类型" , notes = "测试数据:")
     @PostMapping("/select_behavior")
     public List<Behavior> select_behavior() {
         return behaviorDao.select_behavior();
