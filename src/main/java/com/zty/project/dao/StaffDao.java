@@ -18,11 +18,17 @@ public interface StaffDao {
     //增加员工信息
     int add_staff(Map map);
 
+    //增加员工信息
+    int InsertStaff(Staff staff);
+
     //删除员工信息
     int del_staff(Map map);
 
     //修改员工信息
     int upd_staff(Map map);
+
+    //根据card修改员工信息
+    int UpdateStaffByCard(Staff staff);
 
     //修改员工在职状态
     int upd_staff_state(Map map);
@@ -53,4 +59,6 @@ public interface StaffDao {
 
     //统计女生人数
     int count_staff_girl();
+
+    int CountByCard(String card);
 }

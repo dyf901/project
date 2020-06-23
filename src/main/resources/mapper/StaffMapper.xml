@@ -47,6 +47,14 @@
         #{img_url}, #{department_id}, #{worktype_id});
     </insert>
 
+    <!--增加员工信息-->
+    <insert id="InsertStaff" parameterType="com.zty.project.entity.Staff">
+        INSERT INTO `wisdom_site`.`staff` ( `name`, `sex`, `nation`, `card`, `address`, `phone`, `sos_name`, `sos_ship`,
+        `sos_phone`, `createtime`, `img_url`, `department_id`, `worktype_id`) VALUES
+        (#{name}, #{sex}, #{nation}, #{card}, #{address}, #{phone}, #{sos_name}, #{sos_ship}, #{sos_phone}, now(),
+        #{img_url}, #{department_id}, #{worktype_id});
+    </insert>
+
     <!--删除员工信息-->
     <delete id="del_staff" parameterType="java.util.Map">
         delete from `wisdom_site`.`staff` where id=#{id}
@@ -59,6 +67,15 @@
         `phone`=#{phone}, `sos_name`=#{sos_name}, `sos_ship`=#{sos_ship}, `sos_phone`=#{sos_phone},`img_url`=#{img_url},
         `department_id`=#{department_id}, `worktype_id`=#{worktype_id}
         WHERE (`id`=#{id});
+    </update>
+
+    <!--修改员工信息-->
+    <update id="UpdateStaffByCard" parameterType="com.zty.project.entity.Staff">
+        UPDATE `wisdom_site`.`staff` SET `name`=#{name},
+        `sex`=#{sex}, `nation`=#{nation}, `card`=#{card}, `address`=#{address},
+        `phone`=#{phone}, `sos_name`=#{sos_name}, `sos_ship`=#{sos_ship}, `sos_phone`=#{sos_phone},`img_url`=#{img_url},
+        `department_id`=#{department_id}, `worktype_id`=#{worktype_id}
+        WHERE (`card`=#{card});
     </update>
 
     <!--修改员工在职状态-->
@@ -109,5 +126,10 @@
     <!--统计女生人数-->
     <select id="count_staff_girl" resultType="int">
         select count(*) from staff where sex='女'
+    </select>
+
+    <!--根据身份证查找-->
+    <select id="CountByCard" resultType="int">
+        select count(*) from staff where card='card'
     </select>
 </mapper>

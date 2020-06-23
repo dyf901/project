@@ -31,6 +31,11 @@ public class CommodityService implements CommodityDao {
         return commodityDao.add_commodity(map);
     }
 
+    @Override
+    public int UpdateCommodity(Map map) {
+        return commodityDao.UpdateCommodity(map);
+    }
+
     //修改商品信息 状态改为0
     @Override
     public int update_commodity_active0(Map map) {

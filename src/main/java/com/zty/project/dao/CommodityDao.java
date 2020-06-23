@@ -15,6 +15,9 @@ public interface CommodityDao {
     //增加商品
     int add_commodity(Map map);
 
+    //修改商品信息
+    int UpdateCommodity(Map map);
+
     //修改商品信息 状态改为0
     int update_commodity_active0(Map map);
 

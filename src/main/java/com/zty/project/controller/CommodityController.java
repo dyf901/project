@@ -35,6 +35,12 @@ public class CommodityController {
         return page;
     }
 
+    @ApiOperation(value = "修改商品" , notes = "")
+    @PostMapping("UpdateCommodity")
+    public boolean UpdateCommodity(@RequestBody Map map) {
+        return commodityService.UpdateCommodity(map) == 1;
+    }
+
     @ApiOperation(value = "增加商品" , notes = "")
     @PostMapping("add_commodity")
     public boolean add_commodity(@RequestBody Map map) {
