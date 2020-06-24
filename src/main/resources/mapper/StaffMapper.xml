@@ -42,17 +42,17 @@
     <!--增加员工信息-->
     <insert id="add_staff" parameterType="java.util.Map">
         INSERT INTO `wisdom_site`.`staff` ( `name`, `sex`, `nation`, `card`, `address`, `phone`, `sos_name`, `sos_ship`,
-        `sos_phone`, `createtime`, `img_url`, `department_id`, `worktype_id`) VALUES
+        `sos_phone`, `createtime`, `img_url`, `department_id`, `worktype_id`,`type`) VALUES
         (#{name}, #{sex}, #{nation}, #{card}, #{address}, #{phone}, #{sos_name}, #{sos_ship}, #{sos_phone}, now(),
-        #{img_url}, #{department_id}, #{worktype_id});
+        #{img_url}, #{department_id}, #{worktype_id}, #{type});
     </insert>
 
     <!--增加员工信息-->
     <insert id="InsertStaff" parameterType="com.zty.project.entity.Staff">
         INSERT INTO `wisdom_site`.`staff` ( `name`, `sex`, `nation`, `card`, `address`, `phone`, `sos_name`, `sos_ship`,
-        `sos_phone`, `createtime`, `img_url`, `department_id`, `worktype_id`) VALUES
+        `sos_phone`, `createtime`, `img_url`, `department_id`, `worktype_id`,`type`) VALUES
         (#{name}, #{sex}, #{nation}, #{card}, #{address}, #{phone}, #{sos_name}, #{sos_ship}, #{sos_phone}, now(),
-        #{img_url}, #{department_id}, #{worktype_id});
+        #{img_url}, #{department_id}, #{worktype_id},#{type});
     </insert>
 
     <!--删除员工信息-->

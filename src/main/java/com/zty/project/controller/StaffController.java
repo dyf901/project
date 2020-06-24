@@ -11,13 +11,12 @@ import com.zty.project.util.Msg;
 import com.zty.project.util.MyException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.POIXMLDocumentPart;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.*;
 import org.apache.tomcat.util.codec.binary.Base64;
+import org.openxmlformats.schemas.drawingml.x2006.spreadsheetDrawing.CTMarker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +25,10 @@ import sun.misc.BASE64Decoder;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.*;
+
+import static com.zty.project.controller.POIExcel.getPictures1;
+import static com.zty.project.controller.POIExcel.getPictures2;
+import static com.zty.project.controller.POIExcel.printImg;
 
 @Api(description = "员工接口")
 @RestController
@@ -252,6 +255,25 @@ public class StaffController {
         if(sheet!=null){
             notNull = true;
         }
+
+        Map<String, PictureData> maplist=null;
+        sheet = wb.getSheetAt(0);
+        // 判断用07还是03的方法获取图片
+        if (isExcel2003) {
+            maplist = getPictures1((HSSFSheet) sheet);
+        } else {
+            maplist = getPictures2((XSSFSheet) sheet);
+        }
+        try {
+            printImg(maplist);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            //释放map
+            if (maplist != null){
+                maplist = null;
+            }
+        }
         Staff staff;
         for (int r = 1; r <= sheet.getLastRowNum(); r++) {
             Row row = sheet.getRow(r);
@@ -261,7 +283,7 @@ public class StaffController {
 
             staff = new Staff();
 
-            if( row.getCell(0).getCellType() !=1){
+            /*if( row.getCell(0).getCellType() !=1){
                 throw new MyException("导入失败(第"+(r+1)+"行,姓名请设为文本格式)");
             }
             String name = row.getCell(0).getStringCellValue();
@@ -285,13 +307,45 @@ public class StaffController {
                 throw new MyException("导入失败(第"+(r+1)+"行,入职日期格式不正确或未填写)");
             }else{
                 date = row.getCell(3).getDateCellValue();
-            }
+            }*/
 
-            String des = row.getCell(4).getStringCellValue();
+            String name = row.getCell(0).getStringCellValue();
+            String sex = row.getCell(1).getStringCellValue();
+            String nation = row.getCell(2).getStringCellValue();
+            row.getCell(3).setCellType(Cell.CELL_TYPE_STRING);
+            String card = row.getCell(3).getStringCellValue();
+            System.out.println("card:"+card);
+            String address = row.getCell(4).getStringCellValue();
+            row.getCell(5).setCellType(Cell.CELL_TYPE_STRING);
+            String phone = row.getCell(5).getStringCellValue();
+            String sos_name = row.getCell(6).getStringCellValue();
+            String sos_ship = row.getCell(7).getStringCellValue();
+            row.getCell(8).setCellType(Cell.CELL_TYPE_STRING);
+            String sos_phone = row.getCell(8).getStringCellValue();
+            String img_url = row.getCell(9).getStringCellValue();
+            row.getCell(10).setCellType(Cell.CELL_TYPE_STRING);
+            int department_id = Integer.parseInt(row.getCell(10).getStringCellValue());
+            row.getCell(11).setCellType(Cell.CELL_TYPE_STRING);
+            int worktype_id = Integer.parseInt(row.getCell(11).getStringCellValue());
+            String type = row.getCell(12).getStringCellValue();
+
 
             staff.setName(name);
-            staff.setPhone(phone);
+            staff.setSex(sex);
+            staff.setNation(nation);
+            staff.setCard(card);
             staff.setAddress(address);
+            staff.setPhone(phone);
+            staff.setSos_name(sos_name);
+            staff.setSos_ship(sos_ship);
+            staff.setSos_phone(sos_phone);
+            staff.setImg_url(img_url);
+            staff.setDepartment_id(department_id);
+            staff.setWorktype_id(worktype_id);
+            staff.setType(type);
+
+
+
 
             staffList.add(staff);
         }
@@ -307,5 +361,74 @@ public class StaffController {
             }
         }
         return  notNull;
+    }
+
+    /**
+     * 获取图片和位置 (xls)
+     * @param sheet
+     * @return
+     * @throws IOException
+     */
+    public static Map<String, PictureData> getPictures1 (HSSFSheet sheet) throws IOException {
+        Map<String, PictureData> map = new HashMap<String, PictureData>();
+        List<HSSFShape> list = sheet.getDrawingPatriarch().getChildren();
+        for (HSSFShape shape : list) {
+            if (shape instanceof HSSFPicture) {
+                HSSFPicture picture = (HSSFPicture) shape;
+                HSSFClientAnchor cAnchor = (HSSFClientAnchor) picture.getAnchor();
+                PictureData pdata = picture.getPictureData();
+                String key = cAnchor.getRow1() + "-" + cAnchor.getCol1(); // 行号-列号
+                map.put(key, pdata);
+            }
+        }
+        return map;
+    }
+    /**
+     * 获取图片和位置 (xlsx)
+     * @param sheet
+     * @return
+     * @throws IOException
+     */
+    public static Map<String, PictureData> getPictures2 (XSSFSheet sheet) throws IOException {
+        Map<String, PictureData> map = new HashMap<String, PictureData>();
+        List<POIXMLDocumentPart> list = sheet.getRelations();
+        for (POIXMLDocumentPart part : list) {
+            if (part instanceof XSSFDrawing) {
+                XSSFDrawing drawing = (XSSFDrawing) part;
+                List<XSSFShape> shapes = drawing.getShapes();
+                for (XSSFShape shape : shapes) {
+                    XSSFPicture picture = (XSSFPicture) shape;
+                    XSSFClientAnchor anchor = picture.getPreferredSize();
+                    CTMarker marker = anchor.getFrom();
+                    String key = marker.getRow() + "-" + marker.getCol();
+                    System.out.println(key);
+                    System.out.println(picture.getPictureData());
+                    map.put(key, picture.getPictureData());
+                }
+            }
+        }
+        return map;
+    }
+    //图片写出
+    public static void printImg(Map<String, PictureData> sheetList) throws Exception {
+        Object key[] = sheetList.keySet().toArray();
+        String filePath = "";
+        for (int i = 0; i < sheetList.size(); i++) {
+            // 获取图片流
+            PictureData pic = sheetList.get(key[i]);
+            // 获取图片索引
+            String picName = key[i].toString();
+            // 获取图片格式
+            String ext = pic.suggestFileExtension();
+            byte[] data = pic.getData();
+            //文件上传七牛
+//            QiNiuUtils.uploadOneObject(data,"111_"+picName + "." + ext);
+            //图片保存路径
+            filePath = "D:\\img\\pic" + picName + "." + ext;
+            System.out.println(filePath);
+            FileOutputStream out = new FileOutputStream(filePath);
+            out.write(data);
+            out.close();
+        }
     }
 }
