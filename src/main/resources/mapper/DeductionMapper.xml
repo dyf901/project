@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zty.project.dao.DeductionDao">
+    <!--增加减分信息-->
+    <insert id="InsertDeduction" parameterType="java.util.Map">
+        INSERT INTO `wisdom_site`.`deduction` (`staff_id`, `content`, `integral`, `uptime`) VALUES (#{staff_id}, #{content}, #{integral}, now());
+    </insert>
+    
+    <!--删除减分信息-->
+    <delete id="DeleteDeduction" parameterType="java.util.Map">
+        DELETE FROM `wisdom_site`.`deduction` WHERE `id`=#{id}
+    </delete>
+</mapper>

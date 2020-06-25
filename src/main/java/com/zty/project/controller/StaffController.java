@@ -5,8 +5,11 @@ import com.zty.project.dao.DepartmentDao;
 import com.zty.project.dao.StaffDao;
 import com.zty.project.entity.Department;
 import com.zty.project.entity.Staff;
+import com.zty.project.entity.WorkType;
 import com.zty.project.page.Page;
+import com.zty.project.service.DepartmentService;
 import com.zty.project.service.StaffService;
+import com.zty.project.service.WorkTypeService;
 import com.zty.project.util.Msg;
 import com.zty.project.util.MyException;
 import io.swagger.annotations.Api;
@@ -24,6 +27,7 @@ import sun.misc.BASE64Decoder;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.zty.project.controller.POIExcel.getPictures1;
@@ -43,6 +47,12 @@ public class StaffController {
 
     @Autowired
     private DepartmentDao departmentDao;
+
+    @Autowired
+    private WorkTypeService workTypeService;
+
+    @Autowired
+    private DepartmentService departmentService;
 
     @ApiOperation(value = "分页模糊查询员工信息" , notes = "测试数据:{\"pageNo\": 1, \"pageSize\":10}")
     @PostMapping("/find_staff")
@@ -283,53 +293,57 @@ public class StaffController {
 
             staff = new Staff();
 
-            /*if( row.getCell(0).getCellType() !=1){
-                throw new MyException("导入失败(第"+(r+1)+"行,姓名请设为文本格式)");
-            }
-            String name = row.getCell(0).getStringCellValue();
-
-            if(name == null || name.isEmpty()){
-                throw new MyException("导入失败(第"+(r+1)+"行,姓名未填写)");
-            }
-
-            row.getCell(1).setCellType(Cell.CELL_TYPE_STRING);
-            String phone = row.getCell(1).getStringCellValue();
-            if(phone==null || phone.isEmpty()){
-                throw new MyException("导入失败(第"+(r+1)+"行,电话未填写)");
-            }
-            String address = row.getCell(2).getStringCellValue();
-            if(address==null){
-                throw new MyException("导入失败(第"+(r+1)+"行,不存在此单位或单位未填写)");
-            }
-
-            Date date;
-            if(row.getCell(3).getCellType() !=0){
-                throw new MyException("导入失败(第"+(r+1)+"行,入职日期格式不正确或未填写)");
-            }else{
-                date = row.getCell(3).getDateCellValue();
-            }*/
-
-            String name = row.getCell(0).getStringCellValue();
-            String sex = row.getCell(1).getStringCellValue();
-            String nation = row.getCell(2).getStringCellValue();
-            row.getCell(3).setCellType(Cell.CELL_TYPE_STRING);
-            String card = row.getCell(3).getStringCellValue();
+            String name = row.getCell(0).getStringCellValue();//姓名
+            String sex = row.getCell(1).getStringCellValue();//性别
+            String nation = row.getCell(2).getStringCellValue();//民族
+            row.getCell(3).setCellType(Cell.CELL_TYPE_STRING);//设置身份证号格式
+            String card1 = row.getCell(3).getStringCellValue();//身份证号
+            System.out.println("card1:"+card1);
+            System.out.println(card1.length());
+            String card=card1.substring(0, 18);
             System.out.println("card:"+card);
-            String address = row.getCell(4).getStringCellValue();
-            row.getCell(5).setCellType(Cell.CELL_TYPE_STRING);
-            String phone = row.getCell(5).getStringCellValue();
-            String sos_name = row.getCell(6).getStringCellValue();
-            String sos_ship = row.getCell(7).getStringCellValue();
-            row.getCell(8).setCellType(Cell.CELL_TYPE_STRING);
-            String sos_phone = row.getCell(8).getStringCellValue();
-            String img_url = row.getCell(9).getStringCellValue();
+            String address = row.getCell(4).getStringCellValue();//地址
+            row.getCell(5).setCellType(Cell.CELL_TYPE_STRING);//设置手机号格式
+            String phone = row.getCell(5).getStringCellValue();//手机号
+            String sos_name = row.getCell(6).getStringCellValue();//紧急联系人
+            String sos_ship = row.getCell(7).getStringCellValue();//紧急联系人关系
+            row.getCell(8).setCellType(Cell.CELL_TYPE_STRING);//设置紧急联系人号码格式
+            String sos_phone = row.getCell(8).getStringCellValue();//紧急联系人电话
+            //String img_url = row.getCell(9).getStringCellValue();//照片
+
+            row.getCell(9).setCellType(Cell.CELL_TYPE_STRING);
+            //int department_id = Integer.parseInt(row.getCell(9).getStringCellValue());
+            String department_name = row.getCell(9).getStringCellValue();
+            List<Department> department = departmentService.select_department();
+            int department_id=0;
+            for (int i=0;i<department.size();i++){
+                Department department1=department.get(i);
+                if (department1.getName().equals(department_name)){
+                    department_id=department1.getId();
+                }
+            }
+
             row.getCell(10).setCellType(Cell.CELL_TYPE_STRING);
-            int department_id = Integer.parseInt(row.getCell(10).getStringCellValue());
-            row.getCell(11).setCellType(Cell.CELL_TYPE_STRING);
-            int worktype_id = Integer.parseInt(row.getCell(11).getStringCellValue());
-            String type = row.getCell(12).getStringCellValue();
+            //int worktype_id = Integer.parseInt(row.getCell(10).getStringCellValue());
+            String worktype_name = row.getCell(10).getStringCellValue();
+            List<WorkType> worktype = workTypeService.select_worktype();
+            int worktype_id=0;
+            for (int j=0;j<worktype.size();j++){
+                WorkType worktype1 = worktype.get(j);
+                if (worktype1.getName().equals(worktype_name)){
+                    worktype_id=worktype1.getId();
+                }
+            }
 
 
+            String type = row.getCell(11).getStringCellValue();//班组
+
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
+            //System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+
+            String img_url=r+"."+df.format(new Date())+".jpg";
+
+            //添加到实体类
             staff.setName(name);
             staff.setSex(sex);
             staff.setNation(nation);
@@ -344,13 +358,12 @@ public class StaffController {
             staff.setWorktype_id(worktype_id);
             staff.setType(type);
 
-
-
-
+            //添加到数组里
             staffList.add(staff);
         }
         for (Staff staff1 : staffList) {
             String card = staff1.getCard();
+            System.out.println(card);
             int cnt = staffService.CountByCard(card);
             if (cnt == 0) {
                 staffService.InsertStaff(staff1);
@@ -377,7 +390,8 @@ public class StaffController {
                 HSSFPicture picture = (HSSFPicture) shape;
                 HSSFClientAnchor cAnchor = (HSSFClientAnchor) picture.getAnchor();
                 PictureData pdata = picture.getPictureData();
-                String key = cAnchor.getRow1() + "-" + cAnchor.getCol1(); // 行号-列号
+                //String key = cAnchor.getRow1() + "-" + cAnchor.getCol1(); // 行号-列号
+                String key = String.valueOf(cAnchor.getRow1());
                 map.put(key, pdata);
             }
         }
@@ -400,15 +414,16 @@ public class StaffController {
                     XSSFPicture picture = (XSSFPicture) shape;
                     XSSFClientAnchor anchor = picture.getPreferredSize();
                     CTMarker marker = anchor.getFrom();
-                    String key = marker.getRow() + "-" + marker.getCol();
-                    System.out.println(key);
-                    System.out.println(picture.getPictureData());
+                    //String key = marker.getRow() + "-" + marker.getCol();
+                    String key = String.valueOf(marker.getRow());
+                    //System.out.println(key);
                     map.put(key, picture.getPictureData());
                 }
             }
         }
         return map;
     }
+
     //图片写出
     public static void printImg(Map<String, PictureData> sheetList) throws Exception {
         Object key[] = sheetList.keySet().toArray();
@@ -424,7 +439,11 @@ public class StaffController {
             //文件上传七牛
 //            QiNiuUtils.uploadOneObject(data,"111_"+picName + "." + ext);
             //图片保存路径
-            filePath = "D:\\img\\pic" + picName + "." + ext;
+            SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
+            //System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+            //filePath = "D:\\img\\" + picName+"."+df.format(new Date())+ "." + ext;
+
+            filePath = "/root/img/" + picName+"."+df.format(new Date())+ "." + ext;
             System.out.println(filePath);
             FileOutputStream out = new FileOutputStream(filePath);
             out.write(data);
