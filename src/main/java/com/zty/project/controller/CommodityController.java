@@ -25,6 +25,17 @@ public class CommodityController {
     private CommodityService commodityService;
 
     @ApiOperation(value = "分页模糊查询商品信息" , notes = "")
+    @PostMapping("/FindCommodity")
+    public Page<Commodity> FindCommodity(@RequestBody Map map) {
+        Page<Commodity> page = new Page<Commodity>();
+        page.setPageNo((Integer) map.get("pageNo"));
+        page.setPageSize((Integer) map.get("pageSize"));
+        page.setTotal(commodityService.total());
+        page.setItems(commodityService.FindCommodity(map));
+        return page;
+    }
+
+    @ApiOperation(value = "分页模糊查询商品信息" , notes = "")
     @PostMapping("find_commodity")
     public Page<Commodity> find_commodity(@RequestBody Map map) {
         Page<Commodity> page = new Page<Commodity>();

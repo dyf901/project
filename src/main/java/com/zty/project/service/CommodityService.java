@@ -13,6 +13,11 @@ public class CommodityService implements CommodityDao {
     @Autowired
     private CommodityDao commodityDao;
 
+    @Override
+    public List<Commodity> FindCommodity(Map map) {
+        return commodityDao.FindCommodity(map);
+    }
+
     //分页查找所有商品信息
     @Override
     public List<Commodity> find_commodity(Map map) {

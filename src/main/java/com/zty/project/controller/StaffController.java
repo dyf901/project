@@ -338,10 +338,20 @@ public class StaffController {
 
             String type = row.getCell(11).getStringCellValue();//班组
 
-            SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
-            //System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+            String img = row.getCell(12).getStringCellValue();//图片
+            System.out.println("img"+img);
 
-            String img_url=r+"."+df.format(new Date())+".jpg";
+            String img_url=null;
+
+            if(img.equals("null")){
+                img_url="default.jpg";
+
+            }else {
+                SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");//设置日期格式
+                //System.out.println(df.format(new Date()));// new Date()为获取当前系统时间
+                img_url=r+"."+df.format(new Date())+".jpg";
+            }
+
 
             //添加到实体类
             staff.setName(name);

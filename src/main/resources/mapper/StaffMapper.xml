@@ -41,7 +41,7 @@
 
     <!--增加员工信息-->
     <insert id="add_staff" parameterType="java.util.Map">
-        INSERT INTO `wisdom_site`.`staff` ( `name`, `sex`, `nation`, `card`, `address`, `phone`, `sos_name`, `sos_ship`,
+        INSERT INTO `staff` ( `name`, `sex`, `nation`, `card`, `address`, `phone`, `sos_name`, `sos_ship`,
         `sos_phone`, `createtime`, `img_url`, `department_id`, `worktype_id`,`type`) VALUES
         (#{name}, #{sex}, #{nation}, #{card}, #{address}, #{phone}, #{sos_name}, #{sos_ship}, #{sos_phone}, now(),
         #{img_url}, #{department_id}, #{worktype_id}, #{type});
@@ -49,7 +49,7 @@
 
     <!--增加员工信息-->
     <insert id="InsertStaff" parameterType="com.zty.project.entity.Staff">
-        INSERT INTO `wisdom_site`.`staff` ( `name`, `sex`, `nation`, `card`, `address`, `phone`, `sos_name`, `sos_ship`,
+        INSERT INTO `staff` ( `name`, `sex`, `nation`, `card`, `address`, `phone`, `sos_name`, `sos_ship`,
         `sos_phone`, `createtime`, `img_url`, `department_id`, `worktype_id`,`type`) VALUES
         (#{name}, #{sex}, #{nation}, #{card}, #{address}, #{phone}, #{sos_name}, #{sos_ship}, #{sos_phone}, now(),
         #{img_url}, #{department_id}, #{worktype_id},#{type});
@@ -57,12 +57,12 @@
 
     <!--删除员工信息-->
     <delete id="del_staff" parameterType="java.util.Map">
-        delete from `wisdom_site`.`staff` where id=#{id}
+        delete from `staff` where id=#{id}
     </delete>
 
     <!--修改员工信息-->
     <update id="upd_staff" parameterType="java.util.Map">
-        UPDATE `wisdom_site`.`staff` SET `name`=#{name},
+        UPDATE `staff` SET `name`=#{name},
         `sex`=#{sex}, `nation`=#{nation}, `card`=#{card}, `address`=#{address},
         `phone`=#{phone}, `sos_name`=#{sos_name}, `sos_ship`=#{sos_ship}, `sos_phone`=#{sos_phone},`img_url`=#{img_url},
         `department_id`=#{department_id}, `worktype_id`=#{worktype_id}
@@ -71,7 +71,7 @@
 
     <!--修改员工信息-->
     <update id="UpdateStaffByCard" parameterType="com.zty.project.entity.Staff">
-        UPDATE `wisdom_site`.`staff` SET `name`=#{name},
+        UPDATE `staff` SET `name`=#{name},
         `sex`=#{sex}, `nation`=#{nation}, `card`=#{card}, `address`=#{address},
         `phone`=#{phone}, `sos_name`=#{sos_name}, `sos_ship`=#{sos_ship}, `sos_phone`=#{sos_phone},`img_url`=#{img_url},
         `department_id`=#{department_id}, `worktype_id`=#{worktype_id}
@@ -80,7 +80,7 @@
 
     <!--修改员工在职状态-->
     <update id="upd_staff_state" parameterType="java.util.Map">
-        update `wisdom_site`.`staff` set state="离职" where id=#{id}
+        update `staff` set state="离职" where id=#{id}
     </update>
 
     <!--根据身份证号card查询人员信息-->

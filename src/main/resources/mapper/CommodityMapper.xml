@@ -3,16 +3,28 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zty.project.dao.CommodityDao">
-    <!-- 分页查找所有商品信息 -->
-    <select id="find_commodity" parameterType="java.util.Map" resultType="com.zty.project.entity.Commodity">
+    <!--PC查询全部商品-->
+    <select id="FindCommodity" parameterType="java.util.Map" resultType="com.zty.project.entity.Commodity">
         <bind name="page" value="pageSize*(pageNo-1)"></bind>
         select * from commodity
         <where>
             <if test="commodity_name!=null and commodity_name!=''">
-                commodity_name like concat("%",#{commodity_name},"%")
+                and commodity_name like concat("%",#{commodity_name},"%")
             </if>
         </where>
+        ORDER BY `up_time` DESC
         limit #{page},#{pageSize}
+    </select>
+
+    <!-- 分页查找所有商品信息 -->
+    <select id="find_commodity" parameterType="java.util.Map" resultType="com.zty.project.entity.Commodity">
+        select * from commodity
+        <where>
+            active=1
+            <if test="commodity_name!=null and commodity_name!=''">
+                and commodity_name like concat("%",#{commodity_name},"%")
+            </if>
+        </where>
     </select>
 
     <!-- 统计总数 -->

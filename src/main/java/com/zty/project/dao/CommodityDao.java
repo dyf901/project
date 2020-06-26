@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface CommodityDao {
+    //分页模糊查询所有商品信息
+    List<Commodity> FindCommodity(Map map);
+
     //分页查找所有商品信息
     List<Commodity> find_commodity(Map map);
 

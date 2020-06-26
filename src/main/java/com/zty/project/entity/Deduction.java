@@ -22,16 +22,20 @@ public class Deduction {
     @ApiModelProperty(value = "上传时间" , name = "uptime")
     private String uptime;
 
+    @ApiModelProperty(value = "上传时间" , name = "staff_name")
+    private String staff_name;
+
     public Deduction(){
         super();
     }
 
-    public Deduction(int id, int staff_id, String content, int integral, String uptime) {
+    public Deduction(int id, int staff_id, String content, int integral, String uptime, String staff_name) {
         this.id = id;
         this.staff_id = staff_id;
         this.content = content;
         this.integral = integral;
         this.uptime = uptime;
+        this.staff_name = staff_name;
     }
 
     public int getId() {
@@ -74,14 +78,23 @@ public class Deduction {
         this.uptime = uptime;
     }
 
+    public String getStaff_name() {
+        return staff_name;
+    }
+
+    public void setStaff_name(String staff_name) {
+        this.staff_name = staff_name;
+    }
+
     @Override
     public String toString() {
-        return "{" +
+        return "Deduction{" +
                 "id=" + id +
                 ", staff_id=" + staff_id +
                 ", content='" + content + '\'' +
                 ", integral=" + integral +
                 ", uptime='" + uptime + '\'' +
+                ", staff_name='" + staff_name + '\'' +
                 '}';
     }
 }
