@@ -17,7 +17,7 @@
     <select id="FindDeduction" parameterType="java.util.Map" resultType="com.zty.project.entity.Deduction">
         <bind name="page" value="pageSize*(pageNo-1)"></bind>
         SELECT d.`id`, d.`staff_id`, d.`content`, d.`integral`, d.`uptime`,s.`name` AS `staff_name` FROM `wisdom_site`.`deduction` d
-        LEFT join JOIN `wisdom_site`.`staff` s ON d.`staff_id`=s.`id`
+        LEFT JOIN `wisdom_site`.`staff` s ON d.`staff_id`=s.`id`
         limit #{page},#{pageSize}
     </select>
 
