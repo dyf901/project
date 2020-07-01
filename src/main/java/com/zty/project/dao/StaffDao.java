@@ -61,4 +61,7 @@ public interface StaffDao {
     int count_staff_girl();
 
     int CountByCard(String card);
+
+    //减分
+    int UpdateEndHistory(Map map);
 }

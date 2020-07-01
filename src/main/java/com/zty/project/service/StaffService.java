@@ -113,4 +113,11 @@ public class StaffService implements StaffDao {
     public int CountByCard(String card) {
         return staffDao.CountByCard(card);
     }
+
+    @Override
+    public int UpdateEndHistory(Map map) {
+        return staffDao.UpdateEndHistory(map);
+    }
+
+
 }

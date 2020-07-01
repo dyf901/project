@@ -132,4 +132,9 @@
     <select id="CountByCard" resultType="int">
         select count(*) from staff where card=#{card}
     </select>
+
+    <!--减分-->
+    <update id="UpdateEndHistory" parameterType="java.util.Map">
+        UPDATE staff set `end`=`end`-#{integral} where id=#{id}
+    </update>
 </mapper>
