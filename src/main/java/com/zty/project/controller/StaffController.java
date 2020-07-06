@@ -291,16 +291,23 @@ public class StaffController {
                 continue;
             }
 
+            String card1 = row.getCell(3).getStringCellValue();//身份证号
+            if(card1.equals("")){
+                continue;
+            }
             staff = new Staff();
 
             String name = row.getCell(0).getStringCellValue();//姓名
             String sex = row.getCell(1).getStringCellValue();//性别
             String nation = row.getCell(2).getStringCellValue();//民族
             row.getCell(3).setCellType(Cell.CELL_TYPE_STRING);//设置身份证号格式
-            String card1 = row.getCell(3).getStringCellValue();//身份证号
+            //String card1 = row.getCell(3).getStringCellValue();//身份证号
             System.out.println("card1:"+card1);
             System.out.println(card1.length());
-            String card=card1.substring(0, 18);
+            String card=null;
+            if(card1.length()>=18){
+                card=card1.substring(0, 18);
+            }
             System.out.println("card:"+card);
             String address = row.getCell(4).getStringCellValue();//地址
             row.getCell(5).setCellType(Cell.CELL_TYPE_STRING);//设置手机号格式
@@ -353,20 +360,22 @@ public class StaffController {
             }
 
 
-            //添加到实体类
-            staff.setName(name);
-            staff.setSex(sex);
-            staff.setNation(nation);
-            staff.setCard(card);
-            staff.setAddress(address);
-            staff.setPhone(phone);
-            staff.setSos_name(sos_name);
-            staff.setSos_ship(sos_ship);
-            staff.setSos_phone(sos_phone);
-            staff.setImg_url(img_url);
-            staff.setDepartment_id(department_id);
-            staff.setWorktype_id(worktype_id);
-            staff.setType(type);
+                //添加到实体类
+                staff.setName(name);
+                staff.setSex(sex);
+                staff.setNation(nation);
+                staff.setCard(card);
+                staff.setAddress(address);
+                staff.setPhone(phone);
+                staff.setSos_name(sos_name);
+                staff.setSos_ship(sos_ship);
+                staff.setSos_phone(sos_phone);
+                staff.setImg_url(img_url);
+                staff.setDepartment_id(department_id);
+                staff.setWorktype_id(worktype_id);
+                staff.setType(type);
+
+
 
             //添加到数组里
             staffList.add(staff);

@@ -74,47 +74,52 @@ public class RiskshowController {
                     extName = ".jpg";
                 }
                 //拼成新名字
-                String newName = path + UUID.randomUUID() + extName;
+                String newName = UUID.randomUUID() + extName;
 
-                String url = UUID.randomUUID() + extName;
+                //String url = UUID.randomUUID() + extName;
                 //这些if else是为了判断文件类型，并把文件名字存到实体类中去，并通过实体类存到数据库。
                 if (count == 1) {
-                    map.put("url" , url);
+                    map.put("url" , newName);
                     System.out.println(map.get("url"));
                 } else if (count == 2) {
-                    map.put("url1" , url);
+                    map.put("url1" , newName);
                     System.out.println(map.get("url1"));
                 } else if (count == 3) {
-                    map.put("url2" , url);
+                    map.put("url2" , newName);
                     System.out.println(map.get("url2"));
                 } else if (count == 4) {
-                    map.put("url3" , url);
+                    map.put("url3" , newName);
                     System.out.println(map.get("url3"));
                 } else if (count == 5) {
-                    map.put("url4" , url);
+                    map.put("url4" , newName);
                     System.out.println(map.get("url4"));
                 } else if (count == 6) {
-                    map.put("url5" , url);
+                    map.put("url5" , newName);
                     System.out.println(map.get("url5"));
                 } else if (count == 7) {
-                    map.put("url6" , url);
+                    map.put("url6" , newName);
                     System.out.println(map.get("url6"));
                 } else if (count == 8) {
-                    map.put("url7" , url);
+                    map.put("url7" , newName);
                     System.out.println(map.get("url7"));
                 } else if (count == 9) {
-                    map.put("url8" , url);
+                    map.put("url8" , newName);
                     System.out.println(map.get("url8"));
                 }
 
-                fout = new FileOutputStream(new File(newName));//把文件保存到新的文件夹下，newName就是上面拼凑的新的文件夹名字
-                //fout.write(file.getBytes());//这样做也可以
-                in = file.getInputStream();
-                int len;
-                byte[] byt = new byte[1024];
-                while ((len = in.read(byt)) != -1) {
-                    fout.write(byt, 0, len);
-                }
+                File excelFile =
+                        new File("/root/img/"//   /root/img/    E:/test/
+                                + newName);
+
+                file.transferTo(excelFile);
+//                fout = new FileOutputStream(new File(newName));//把文件保存到新的文件夹下，newName就是上面拼凑的新的文件夹名字
+//                //fout.write(file.getBytes());//这样做也可以
+//                in = file.getInputStream();
+//                int len;
+//                byte[] byt = new byte[1024];
+//                while ((len = in.read(byt)) != -1) {
+//                    fout.write(byt, 0, len);
+//                }
                 //  如果使用上面的fout.write(file.getBytes());可以如下关闭流
                 //  fout.close();
                 //  in.close();
