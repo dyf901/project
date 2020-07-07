@@ -25,7 +25,7 @@ public class Deduction {
     @ApiModelProperty(value = "上传时间" , name = "staff_name")
     private String staff_name;
 
-    public Deduction(){
+    public Deduction() {
         super();
     }
 

@@ -21,26 +21,26 @@ public class DeductionController {
     @Autowired
     private StaffService staffService;
 
-    @ApiOperation(value = "增加减分信息",notes = "")
+    @ApiOperation(value = "增加减分信息" , notes = "")
     @PostMapping("/InsertDeduction")
-    public boolean InsertDeduction(@RequestBody Map map){
-        System.out.println("map:"+map);
+    public boolean InsertDeduction(@RequestBody Map map) {
+        System.out.println("map:" + map);
         int i = staffService.UpdateEndHistory(map);
-        map.put("staff_id",map.get("id"));
-        if(i==1){
-            int j=deductionService.InsertDeduction(map);
-            if(j==1){
+        map.put("staff_id" , map.get("id"));
+        if (i == 1) {
+            int j = deductionService.InsertDeduction(map);
+            if (j == 1) {
                 return true;
-            }else {
+            } else {
                 return false;
             }
         }
         return true;
     }
 
-    @ApiOperation(value = "分页查询减分信息",notes = "")
+    @ApiOperation(value = "分页查询减分信息" , notes = "")
     @PostMapping("/FindDeduction")
-    public Page FindDeduction(@RequestBody Map map){
+    public Page FindDeduction(@RequestBody Map map) {
         Page page = new Page();
         page.setPageNo((Integer) map.get("pageNo"));
         page.setPageSize((Integer) map.get("pageSize"));
@@ -49,9 +49,9 @@ public class DeductionController {
         return page;
     }
 
-    @ApiOperation(value = "删除减分信息",notes = "")
+    @ApiOperation(value = "删除减分信息" , notes = "")
     @PostMapping("/DeleteDeduction")
-    public boolean DeleteDeduction(@RequestBody Map map){
-        return deductionService.DeleteDeduction(map)==1;
+    public boolean DeleteDeduction(@RequestBody Map map) {
+        return deductionService.DeleteDeduction(map) == 1;
     }
 }
