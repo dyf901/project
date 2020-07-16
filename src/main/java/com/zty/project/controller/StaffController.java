@@ -291,6 +291,7 @@ public class StaffController {
                 continue;
             }
 
+            row.getCell(3).setCellType(Cell.CELL_TYPE_STRING);
             String card1 = row.getCell(3).getStringCellValue();//身份证号
             if (card1.equals("")) {
                 continue;
