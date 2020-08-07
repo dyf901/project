@@ -22,30 +22,30 @@
 
     <!--增加部门种类-->
     <insert id="add_department" parameterType="java.util.Map">
-        INSERT INTO `wisdom_site`.`department` (`name`,`deptnum`,`depthead`, `headphone`, `remark`)
+        INSERT INTO `department` (`name`,`deptnum`,`depthead`, `headphone`, `remark`)
         VALUES (#{name},#{deptnum}, #{depthead}, #{headphone}, #{remark});
     </insert>
 
     <!--删除部门-->
     <delete id="del_department" parameterType="java.util.Map">
-        delete from `wisdom_site`.`department` where id=#{id}
+        delete from `department` where id=#{id}
     </delete>
 
     <!--修改部门信息-->
     <update id="upd_department" parameterType="java.util.Map">
-        UPDATE `wisdom_site`.`department` SET `name`=#{name}, `deptnum`=#{deptnum},
+        UPDATE `department` SET `name`=#{name}, `deptnum`=#{deptnum},
         `percount`=#{percount}, `depthead`=#{depthead}, `headphone`=#{headphone},
         `remark`=#{remark} WHERE (`id`=#{id});
     </update>
 
     <!--增加部门人数-->
     <update id="upd_department_percount" parameterType="java.util.Map">
-        UPDATE `wisdom_site`.`department` SET `percount`=#{percount}+1 where id=#{id}
+        UPDATE `department` SET `percount`=#{percount}+1 where id=#{id}
     </update>
 
     <!--根据id查询部门信息-->
     <select id="find_department_id" parameterType="java.util.Map" resultType="com.zty.project.entity.Department">
-        select * from `wisdom_site`.`department` where id=#{department_id}
+        select * from `department` where id=#{department_id}
     </select>
 
     <!--下拉框查询部门信息-->

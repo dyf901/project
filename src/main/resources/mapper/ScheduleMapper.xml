@@ -5,7 +5,7 @@
 <mapper namespace="com.zty.project.dao.ScheduleDao">
     <!--增加进度上传记录-->
     <insert id="add_schedule" parameterType="java.util.Map">
-        INSERT INTO `wisdom_site`.`schedule` (`station_id`, `project_id`, `accomplish_day`, `uptime`)
+        INSERT INTO `schedule` (`station_id`, `project_id`, `accomplish_day`, `uptime`)
         VALUES (#{station_id}, #{id}, #{accomplish_day}, now());
     </insert>
 

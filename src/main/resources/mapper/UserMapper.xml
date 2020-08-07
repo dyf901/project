@@ -6,11 +6,11 @@
 
     <!--根据username查询登录账号信息-->
     <select id="findByUsername" parameterType="java.util.Map" resultType="com.zty.project.entity.User">
-        select * from user where username=#{username}
+        select * from `user` where username=#{username}
     </select>
 
     <!--根据id查询登录账号信息-->
     <select id="findUserById" parameterType="java.util.Map" resultType="com.zty.project.entity.User">
-        select * from user where id=#{id}
+        select * from `user` where id=#{id}
     </select>
 </mapper>

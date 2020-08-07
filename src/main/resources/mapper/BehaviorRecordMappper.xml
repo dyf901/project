@@ -28,18 +28,18 @@
 
     <!--增加行为记录-->
     <insert id="add_behaviorrecord" parameterType="java.util.Map">
-        INSERT INTO `wisdom_site`.`behavior_record` (`staff_id`, `behavior_id`, `uptime`, `remark`,`integral`)
+        INSERT INTO `behavior_record` (`staff_id`, `behavior_id`, `uptime`, `remark`,`integral`)
         VALUES (#{staff_id}, #{behavior_id}, now(), #{remark},#{integral});
     </insert>
 
     <!--删除行为记录-->
     <delete id="del_behaviorrecord" parameterType="java.util.Map">
-        delete from `wisdom_site`.`behavior_record` where id=#{id}
+        delete from `behavior_record` where id=#{id}
     </delete>
 
     <!--修改行为记录-->
     <update id="upd_behaviorrecord" parameterType="java.util.Map">
-        UPDATE `wisdom_site`.`behavior_record` SET `behavior_id`=#{behavior_id},
+        UPDATE `behavior_record` SET `behavior_id`=#{behavior_id},
         `integral`=#{integral},`remark`=#{remark} WHERE (`id`=#{id});
     </update>
 </mapper>

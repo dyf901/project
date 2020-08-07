@@ -39,7 +39,7 @@
 
     <!--修改商品信息-->
     <update id="UpdateCommodity" parameterType="java.util.Map">
-        UPDATE `wisdom_site`.`commodity` SET `commodity_name`=#{commodity_name}, `price`=#{price}, `url`=#{url} WHERE
+        UPDATE `commodity` SET `commodity_name`=#{commodity_name}, `price`=#{price}, `url`=#{url} WHERE
         (`id`=#{id});
     </update>
 

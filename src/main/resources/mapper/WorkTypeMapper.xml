@@ -23,7 +23,7 @@
 
     <!--增加工种-->
     <insert id="add_worktype" parameterType="java.util.Map">
-        INSERT INTO `wisdom_site`.`worktype` (`name`, `content`, `department_id`, `remark`)
+        INSERT INTO `worktype` (`name`, `content`, `department_id`, `remark`)
         VALUES (#{name}, #{content}, #{department_id}, #{remark});
     </insert>
 
@@ -34,7 +34,7 @@
 
     <!--修改工种-->
     <update id="upd_worktype">
-        UPDATE `wisdom_site`.`worktype` SET `name`=#{name}, `content`=#{content}, `department_id`=#{department_id},
+        UPDATE `worktype` SET `name`=#{name}, `content`=#{content}, `department_id`=#{department_id},
         `remark`=#{remark} WHERE (`id`=#{id})
     </update>
 

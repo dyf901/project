@@ -5,26 +5,26 @@
 <mapper namespace="com.zty.project.dao.DeductionDao">
     <!--增加减分信息-->
     <insert id="InsertDeduction" parameterType="java.util.Map">
-        INSERT INTO `wisdom_site`.`deduction` (`staff_id`, `content`, `integral`, `uptime`) VALUES (#{staff_id},
+        INSERT INTO `deduction` (`staff_id`, `content`, `integral`, `uptime`) VALUES (#{staff_id},
         #{content}, #{integral}, now());
     </insert>
 
     <!--删除减分信息-->
     <delete id="DeleteDeduction" parameterType="java.util.Map">
-        DELETE FROM `wisdom_site`.`deduction` WHERE `id`=#{id}
+        DELETE FROM `deduction` WHERE `id`=#{id}
     </delete>
 
     <!--分页查询减分信息-->
     <select id="FindDeduction" parameterType="java.util.Map" resultType="com.zty.project.entity.Deduction">
         <bind name="page" value="pageSize*(pageNo-1)"></bind>
         SELECT d.`id`, d.`staff_id`, d.`content`, d.`integral`, d.`uptime`,s.`name` AS `staff_name` FROM
-        `wisdom_site`.`deduction` d
-        LEFT JOIN `wisdom_site`.`staff` s ON d.`staff_id`=s.`id`
+        `deduction` d
+        LEFT JOIN `staff` s ON d.`staff_id`=s.`id`
         limit #{page},#{pageSize}
     </select>
 
     <!--统计总数-->
     <select id="Total" resultType="long">
-        SELECT COUNT(id) FROM `wisdom_site`.`deduction`
+        SELECT COUNT(id) FROM `deduction`
     </select>
 </mapper>

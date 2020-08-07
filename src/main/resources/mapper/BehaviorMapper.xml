@@ -22,12 +22,12 @@
 
     <!--增加行为类型信息-->
     <insert id="add_behavior" parameterType="java.util.Map">
-        INSERT INTO `wisdom_site`.`behavior` (`name`, `detail`, `remark`) VALUES (#{name},#{detail},#{remark});
+        INSERT INTO behavior` (`name`, `detail`, `remark`) VALUES (#{name},#{detail},#{remark});
     </insert>
 
     <!--修改行为类型信息-->
     <update id="upd_behavior" parameterType="java.util.Map">
-        UPDATE `wisdom_site`.`behavior` SET `name`=#{name}, `detail`=#{detail}, `remark`=#{remark} WHERE (`id`=#{id});
+        UPDATE `behavior` SET `name`=#{name}, `detail`=#{detail}, `remark`=#{remark} WHERE (`id`=#{id});
     </update>
 
     <!--删除行为类型信息-->
